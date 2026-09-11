@@ -3,3 +3,5 @@ venv/
 __pycache__/
 *.pyc
 staticfiles/
+university_notice_board_backup.sql
+admin_session.json
