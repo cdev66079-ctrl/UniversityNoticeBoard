@@ -1,0 +1,417 @@
+{% extends "notices/base.html" %}
+{% load static %}
+{% load nepali_date %}
+
+{% block title %}
+Community | PUSAT Notice Board
+{% endblock %}
+
+{% block content %}
+
+<div class="notice-board-page">
+
+    <!-- =====================================================
+         BOARD HEADER
+         ===================================================== -->
+
+    <section class="board-header">
+
+        <div class="board-brand">
+
+            <div class="board-logo-wrap">
+                <img
+                    src="{% static 'images/pusat-logo.png' %}"
+                    alt="PUSAT Logo"
+                    class="board-logo"
+                >
+            </div>
+
+            <div class="board-title">
+
+                <div class="board-kicker">
+                    PURBANCHAL UNIVERSITY OF SCIENCE AND TECHNOLOGY
+                </div>
+
+                <h1>PUSAT</h1>
+
+                <div class="board-subtitle">
+                    CAMPUS COMMUNITY BOARD
+                </div>
+
+                <div class="board-location">
+                    Biratnagar, Nepal
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="board-actions">
+
+            <a
+                href="{% url 'home' %}"
+                class="board-link"
+            >
+                Home
+            </a>
+
+            <a
+                href="{% url 'notices' %}"
+                class="board-link"
+            >
+                University Notices
+            </a>
+
+            <a
+                href="{% url 'create_community_post' %}"
+                class="pin-button"
+            >
+                + Pin a Post
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         COMMUNITY PHYSICAL BOARD
+         ===================================================== -->
+
+    <section class="physical-board community-physical-board">
+
+
+        <!-- =================================================
+             BOARD LABEL
+             ================================================= -->
+
+        <div class="board-top-label">
+
+            <span class="board-pin"></span>
+
+            <span>
+                CAMPUS COMMUNITY
+            </span>
+
+            <span class="board-pin"></span>
+
+        </div>
+
+
+        <!-- =================================================
+             INTRO PAPER
+             ================================================= -->
+
+        <div class="community-intro-paper">
+
+            <div class="push-pin">
+                <span></span>
+            </div>
+
+            <div class="paper-tape"></div>
+
+            <span class="small-board-label">
+                STUDENTS • CLUBS • CAMPUS
+            </span>
+
+            <h2>
+                What's happening around campus?
+            </h2>
+
+            <p>
+                This is the open community board. Pin an event,
+                announcement, idea, achievement, lost & found,
+                club activity or anything useful for the PUSAT
+                community.
+            </p>
+
+            <a
+                href="{% url 'create_community_post' %}"
+                class="community-pin-button"
+            >
+                📌 Pin Something on the Board
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             COMMUNITY POSTS AREA
+             ================================================= -->
+
+        <div class="community-board-area full-community-area">
+
+
+            <!-- BOARD HEADING -->
+
+            <div class="community-board-heading">
+
+                <div>
+
+                    <span class="small-board-label">
+                        COMMUNITY POSTS
+                    </span>
+
+                    <h2>
+                        Campus Wall
+                    </h2>
+
+                </div>
+
+                <div class="notice-count-label">
+                    {{ community_posts|length }} posts
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 POST GRID
+                 ================================================= -->
+
+            <div class="community-post-grid">
+
+
+                {% for post in community_posts %}
+
+
+                <!-- =================================================
+                     INDIVIDUAL COMMUNITY PAPER
+                     ================================================= -->
+
+                <article
+                    class="community-paper paper-{{ post.paper_style }}"
+                >
+
+
+                    <!-- PIN -->
+
+                    <div class="paper-pin"></div>
+
+
+                    <!-- TAPE -->
+
+                    <div class="community-note-tape"></div>
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="paper-category">
+
+                        {% if post.category_id %}
+
+                            {% for category in categories %}
+
+                                {% if category.category_id == post.category_id %}
+
+                                    {{ category.category_name }}
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            COMMUNITY
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- DATE -->
+
+                    {% if post.posted_at %}
+
+                    <div class="paper-date">
+
+                        {{ post.posted_at|bs_date }}
+
+                        <span>
+                            • {{ post.posted_at|date:"M d, Y" }}
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- TITLE -->
+
+                    <h2 class="paper-title">
+
+                        <a
+                            href="{% url 'community_detail' post.post_id %}"
+                        >
+                            {{ post.title }}
+                        </a>
+
+                    </h2>
+
+
+                    <!-- IMAGE -->
+
+                    {% if post.attachment_type == "image" and post.attachment %}
+
+                    <div class="paper-image">
+
+                        <img
+                            src="{{ post.attachment }}"
+                            alt="{{ post.title }}"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- CONTENT -->
+
+                    {% if post.content %}
+
+                    <div class="paper-text">
+
+                        <p>
+                            {{ post.content|truncatewords:35 }}
+                        </p>
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="paper-text">
+
+                        <p>
+                            Community announcement.
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- PDF / ATTACHMENT -->
+
+                    {% if post.attachment_type == "pdf" %}
+
+                    <div class="paper-attachment">
+
+                        📎 PDF attached
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- AUTHOR -->
+
+                    <div class="paper-author">
+
+                        Posted by
+
+                        {% if post.display_name %}
+
+                            {{ post.display_name }}
+
+                        {% else %}
+
+                            PUSAT Community
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- OPEN POST -->
+
+                    <a
+                        href="{% url 'community_detail' post.post_id %}"
+                        class="paper-open"
+                    >
+                        Read more →
+                    </a>
+
+
+                </article>
+
+
+                {% empty %}
+
+
+                <!-- =================================================
+                     EMPTY BOARD
+                     ================================================= -->
+
+                <div class="empty-community-note large-empty-community">
+
+                    <div class="small-pin"></div>
+
+                    <div class="empty-icon">
+                        📌
+                    </div>
+
+                    <h3>
+                        The community board is empty
+                    </h3>
+
+                    <p>
+                        Be the first student, club or community member
+                        to pin something here.
+                    </p>
+
+                    <a
+                        href="{% url 'create_community_post' %}"
+                    >
+                        + Create Community Post
+                    </a>
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+            <!-- END COMMUNITY POST GRID -->
+
+
+        </div>
+        <!-- END COMMUNITY BOARD AREA -->
+
+
+        <!-- =====================================================
+             BOTTOM BOARD
+             ===================================================== -->
+
+        <div class="board-bottom">
+
+            <div class="bottom-pin"></div>
+
+            <div class="bottom-board-text">
+
+                <strong>
+                    PUSAT COMMUNITY BOARD
+                </strong>
+
+                <span>
+                    Students • Clubs • Events • Ideas • Community
+                </span>
+
+            </div>
+
+            <div class="bottom-pin"></div>
+
+        </div>
+
+
+    </section>
+    <!-- END PHYSICAL BOARD -->
+
+
+</div>
+<!-- END NOTICE BOARD PAGE -->
+
+
+{% endblock %}

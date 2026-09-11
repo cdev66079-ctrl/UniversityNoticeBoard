@@ -1,0 +1,1443 @@
+{% load static %}
+{% load nepali_date %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PUSAT Notice Board</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        body {
+            background: #f4f1eb;
+            color: #202020;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+        /* =====================================================
+           TOP NAVIGATION
+           ===================================================== */
+
+        .top-nav {
+
+            height: 68px;
+
+            width: 100%;
+
+            background: #172754;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 38px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,.18);
+
+            position: relative;
+
+            z-index: 100;
+        }
+
+
+        .nav-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            text-decoration: none;
+
+            color: white;
+        }
+
+
+        .nav-logo {
+
+            width: 42px;
+            height: 42px;
+
+            object-fit: contain;
+        }
+
+
+        .nav-brand-text {
+
+            display: flex;
+
+            flex-direction: column;
+
+            line-height: 1;
+        }
+
+
+        .nav-brand-text strong {
+
+            font-size: 20px;
+
+            letter-spacing: .03em;
+        }
+
+
+        .nav-brand-text span {
+
+            margin-top: 5px;
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            letter-spacing: .17em;
+
+            opacity: .75;
+        }
+
+
+        .nav-links {
+
+            margin-left: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 34px;
+        }
+
+
+        .nav-links a {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: .2s ease;
+        }
+
+
+        .nav-links a:hover {
+
+            opacity: .7;
+        }
+
+
+        .nav-links .community-btn {
+
+            margin-left: 5px;
+
+            padding: 10px 17px;
+
+            background: rgba(255,255,255,.10);
+
+            border: 1px solid rgba(255,255,255,.18);
+
+            border-radius: 7px;
+        }
+
+
+        /* =====================================================
+           PAGE
+           ===================================================== */
+
+        .board-page {
+
+            width: 100%;
+
+            padding: 28px 28px 45px;
+
+            min-height:
+                calc(100vh - 68px);
+        }
+
+
+        /* =====================================================
+           WOODEN BOARD
+           ===================================================== */
+
+        .wood-board {
+
+            position: relative;
+
+            width: 100%;
+
+            max-width: 1500px;
+
+            min-height: calc(100vh - 125px);
+
+            margin: 0 auto;
+
+            padding: 55px 55px 45px;
+
+            overflow: hidden;
+
+            border: 10px solid #51311e;
+
+            border-radius: 7px;
+
+            background:
+
+                radial-gradient(
+                    ellipse at 20% 15%,
+                    rgba(255,255,255,.08),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    ellipse at 80% 80%,
+                    rgba(0,0,0,.13),
+                    transparent 35%
+                ),
+
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.035) 0px,
+                    rgba(255,255,255,.035) 2px,
+                    transparent 2px,
+                    transparent 10px
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #a96c41,
+                    #8f542f
+                );
+
+            box-shadow:
+
+                0 20px 45px rgba(0,0,0,.28),
+
+                inset 0 0 35px rgba(0,0,0,.20);
+        }
+
+
+        /* =====================================================
+           WOOD DETAILS
+           ===================================================== */
+
+        .wood-board::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 8px;
+
+            border: 1px solid
+                rgba(255,255,255,.15);
+
+            pointer-events: none;
+        }
+
+
+        .wood-board::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,.05) 1px,
+                    transparent 1.5px
+                );
+
+            background-size: 14px 14px;
+
+            opacity: .35;
+        }
+
+
+        /* =====================================================
+           PROFESSIONAL BOARD SYMBOLS
+           ===================================================== */
+
+        .board-symbol {
+
+            position: absolute;
+
+            z-index: 1;
+
+            color:
+                rgba(255,242,214,.23);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-weight: 700;
+
+            pointer-events: none;
+
+            user-select: none;
+        }
+
+
+        .symbol-1 {
+
+            top: 45px;
+            left: 38px;
+
+            font-size: 24px;
+
+            transform: rotate(-8deg);
+        }
+
+
+        .symbol-2 {
+
+            top: 42px;
+            right: 45px;
+
+            font-size: 21px;
+
+            transform: rotate(6deg);
+        }
+
+
+        .symbol-3 {
+
+            top: 43%;
+            left: 22px;
+
+            font-size: 24px;
+
+            transform: rotate(-90deg);
+        }
+
+
+        .symbol-4 {
+
+            top: 45%;
+            right: 20px;
+
+            font-size: 22px;
+
+            transform: rotate(90deg);
+        }
+
+
+        .symbol-5 {
+
+            bottom: 38px;
+            left: 45px;
+
+            font-size: 21px;
+
+            transform: rotate(5deg);
+        }
+
+
+        .symbol-6 {
+
+            bottom: 40px;
+            right: 45px;
+
+            font-size: 23px;
+
+            transform: rotate(-6deg);
+        }
+
+
+        .symbol-7 {
+
+            top: 110px;
+            left: 48%;
+
+            font-size: 17px;
+        }
+
+
+        .symbol-8 {
+
+            bottom: 100px;
+            right: 47%;
+
+            font-size: 19px;
+        }
+
+
+        /* =====================================================
+           SMALL BOARD TITLE
+           ===================================================== */
+
+        .board-heading {
+
+            position: relative;
+
+            z-index: 10;
+
+            text-align: center;
+
+            margin-bottom: 55px;
+        }
+
+
+        .board-heading h1 {
+
+            margin: 0;
+
+            color:
+                rgba(255,248,230,.94);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size:
+                clamp(24px, 3vw, 34px);
+
+            font-weight: 700;
+
+            letter-spacing: .06em;
+
+            text-shadow:
+                0 2px 3px rgba(0,0,0,.30);
+        }
+
+
+        .heading-line {
+
+            width: 95px;
+
+            height: 2px;
+
+            margin: 9px auto 0;
+
+            background:
+                rgba(255,238,202,.40);
+        }
+
+
+        /* =====================================================
+           NOTICE GRID
+           ===================================================== */
+
+        .notice-grid {
+
+            position: relative;
+
+            z-index: 10;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0,1fr));
+
+            gap: 34px 25px;
+
+            align-items: start;
+        }
+
+
+        /* =====================================================
+           NORMAL NOTICE PAPER
+           ===================================================== */
+
+        .notice-paper {
+
+            position: relative;
+
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            min-height: 300px;
+
+            background: #fffdf5;
+
+            box-shadow:
+
+                0 14px 24px rgba(0,0,0,.24),
+
+                0 2px 5px rgba(0,0,0,.15);
+
+            transform: rotate(-.7deg);
+
+            transition:
+                transform .22s ease,
+                box-shadow .22s ease;
+        }
+
+
+        .notice-paper:nth-child(2n) {
+
+            transform: rotate(.65deg);
+        }
+
+
+        .notice-paper:nth-child(3n) {
+
+            transform: rotate(-.35deg);
+        }
+
+
+        .notice-paper:hover {
+
+            z-index: 50;
+
+            transform:
+                translateY(-8px)
+                rotate(0deg);
+
+            box-shadow:
+
+                0 23px 35px rgba(0,0,0,.30);
+        }
+
+
+        /* =====================================================
+           PAPER TEXTURE
+           ===================================================== */
+
+        .notice-paper::after,
+        .image-paper::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+
+                radial-gradient(
+                    rgba(80,60,40,.16) .5px,
+                    transparent .7px
+                );
+
+            background-size: 8px 8px;
+
+            opacity: .25;
+        }
+
+
+        /* =====================================================
+           PIN
+           ===================================================== */
+
+        .paper-pin {
+
+            position: absolute;
+
+            z-index: 100;
+
+            top: -13px;
+
+            left: 50%;
+
+            width: 18px;
+            height: 18px;
+
+            transform:
+                translateX(-50%);
+
+            border-radius: 50%;
+
+            background:
+
+                radial-gradient(
+                    circle at 30% 25%,
+                    #ffb2b2,
+                    #d62828 42%,
+                    #8c1010 72%,
+                    #550707
+                );
+
+            border: 1px solid #650909;
+
+            box-shadow:
+
+                0 4px 7px rgba(0,0,0,.42);
+        }
+
+
+        .paper-pin::after {
+
+            content: "";
+
+            position: absolute;
+
+            top: 13px;
+
+            left: 50%;
+
+            width: 4px;
+            height: 8px;
+
+            transform:
+                translateX(-50%);
+
+            background: #500606;
+
+            clip-path:
+                polygon(
+                    50% 100%,
+                    0 0,
+                    100% 0
+                );
+        }
+
+
+        /* =====================================================
+           NOTICE CONTENT
+           ===================================================== */
+
+        .notice-content {
+
+            position: relative;
+
+            z-index: 5;
+
+            padding: 31px 20px 17px;
+
+            flex: 1;
+        }
+
+
+        .category {
+
+            display: inline-block;
+
+            margin-bottom: 9px;
+
+            padding: 5px 8px;
+
+            border-radius: 20px;
+
+            background: #e9edfb;
+
+            color: #314c88;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            letter-spacing: .07em;
+
+            text-transform: uppercase;
+        }
+
+
+        .notice-content h2 {
+
+            margin: 0 0 13px;
+
+            color: #1d2940;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 20px;
+
+            line-height: 1.25;
+        }
+
+
+        .notice-content h2 a {
+
+            color: inherit;
+
+            text-decoration: none;
+        }
+
+
+        .notice-content h2 a:hover {
+
+            color: #36578f;
+        }
+
+
+        .notice-content p {
+
+            margin: 0;
+
+            color: #5b5d60;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           IMAGE INSIDE NORMAL NOTICE
+           ===================================================== */
+
+        .notice-image {
+
+            display: block;
+
+            margin: 0 0 13px;
+
+            overflow: hidden;
+
+            border: 1px solid #d8d2c5;
+
+            background: #eee;
+        }
+
+
+        .notice-image img {
+
+            display: block;
+
+            width: 100%;
+
+            max-height: 190px;
+
+            object-fit: cover;
+        }
+
+
+        /* =====================================================
+           IMPORTANT
+           ===================================================== */
+
+        .important {
+
+            position: absolute;
+
+            z-index: 20;
+
+            top: 13px;
+
+            right: 12px;
+
+            padding: 4px 7px;
+
+            border: 2px solid #a52218;
+
+            color: #a52218;
+
+            font-size: 7px;
+
+            font-weight: 900;
+
+            letter-spacing: .08em;
+
+            transform: rotate(6deg);
+        }
+
+
+        /* =====================================================
+           PAPER FOOTER
+           ===================================================== */
+
+        .paper-footer {
+
+            position: relative;
+
+            z-index: 5;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin: 0 20px;
+
+            padding: 10px 0 14px;
+
+            border-top:
+                1px solid #ddd8cc;
+        }
+
+
+        .date {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 2px;
+        }
+
+
+        .date strong {
+
+            color: #30446e;
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 10px;
+        }
+
+
+        .date span {
+
+            color: #999;
+
+            font-size: 8px;
+        }
+
+
+        .open {
+
+            color: #304873;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           IMAGE NOTICE
+           ===================================================== */
+
+        .image-link {
+
+            display: block;
+
+            min-width: 0;
+
+            color: inherit;
+
+            text-decoration: none;
+        }
+
+
+        .image-paper {
+
+            position: relative;
+
+            min-width: 0;
+
+            padding: 16px 15px 12px;
+
+            background: #fffdf5;
+
+            box-shadow:
+
+                0 14px 24px rgba(0,0,0,.24),
+
+                0 2px 5px rgba(0,0,0,.15);
+
+            transform: rotate(.7deg);
+
+            transition:
+                transform .22s ease,
+                box-shadow .22s ease;
+        }
+
+
+        .image-paper:hover {
+
+            z-index: 50;
+
+            transform:
+                translateY(-8px)
+                rotate(0deg);
+
+            box-shadow:
+
+                0 23px 35px rgba(0,0,0,.30);
+        }
+
+
+        .image-paper img {
+
+            position: relative;
+
+            z-index: 5;
+
+            display: block;
+
+            width: 100%;
+
+            max-height: 310px;
+
+            object-fit: contain;
+
+            background: #eee;
+        }
+
+
+        .image-date {
+
+            position: relative;
+
+            z-index: 5;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 3px;
+
+            margin-top: 10px;
+
+            padding-top: 9px;
+
+            border-top:
+                1px solid #ddd8cc;
+        }
+
+
+        .image-date strong {
+
+            color: #30446e;
+
+            font-family: Georgia, serif;
+
+            font-size: 10px;
+        }
+
+
+        .image-date span {
+
+            color: #999;
+
+            font-size: 8px;
+        }
+
+
+        /* =====================================================
+           EMPTY BOARD
+           ===================================================== */
+
+        .empty {
+
+            grid-column: 1 / -1;
+
+            padding: 80px 20px;
+
+            text-align: center;
+
+            color: rgba(255,255,255,.8);
+        }
+
+
+        .empty h2 {
+
+            margin: 0 0 7px;
+
+            font-family: Georgia, serif;
+        }
+
+
+        .empty p {
+
+            margin: 0;
+
+            opacity: .7;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           BOARD BOTTOM
+           ===================================================== */
+
+        .board-bottom {
+
+            position: relative;
+
+            z-index: 10;
+
+            margin-top: 42px;
+
+            text-align: center;
+
+            color:
+                rgba(255,239,211,.45);
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            letter-spacing: .18em;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 1200px) {
+
+            .notice-grid {
+
+                grid-template-columns:
+                    repeat(3, minmax(0,1fr));
+            }
+        }
+
+
+        @media (max-width: 900px) {
+
+            .top-nav {
+
+                padding: 0 20px;
+            }
+
+            .nav-links {
+
+                gap: 16px;
+            }
+
+            .nav-links a {
+
+                font-size: 12px;
+            }
+
+            .board-page {
+
+                padding: 18px;
+            }
+
+            .wood-board {
+
+                padding: 45px 30px 35px;
+            }
+
+            .notice-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0,1fr));
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .top-nav {
+
+                height: 62px;
+
+                padding: 0 14px;
+            }
+
+            .nav-logo {
+
+                width: 35px;
+                height: 35px;
+            }
+
+            .nav-brand-text strong {
+
+                font-size: 16px;
+            }
+
+            .nav-brand-text span {
+
+                display: none;
+            }
+
+            .nav-links {
+
+                gap: 9px;
+            }
+
+            .nav-links a {
+
+                font-size: 10px;
+            }
+
+            .nav-links .community-btn {
+
+                padding: 8px 10px;
+            }
+
+            .board-page {
+
+                padding: 8px;
+            }
+
+            .wood-board {
+
+                padding:
+                    38px 15px 25px;
+
+                border-width: 7px;
+            }
+
+            .board-heading {
+
+                margin-bottom: 40px;
+            }
+
+            .board-heading h1 {
+
+                font-size: 22px;
+            }
+
+            .notice-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 30px;
+            }
+
+            .board-symbol {
+
+                font-size: 14px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVIGATION
+     ========================================================= -->
+
+<nav class="top-nav">
+
+    <a href="{% url 'home' %}" class="nav-brand">
+
+        <img
+            src="{% static 'images/pusat-logo.png' %}"
+            class="nav-logo"
+            alt="PUSAT"
+        >
+
+        <div class="nav-brand-text">
+
+            <strong>PUSAT</strong>
+
+            <span>NOTICE BOARD</span>
+
+        </div>
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'notices' %}">
+            University Notices
+        </a>
+
+        <a
+            href="{% url 'community' %}"
+            class="community-btn"
+        >
+            Community
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     BOARD
+     ========================================================= -->
+
+<div class="board-page">
+
+    <section class="wood-board">
+
+
+        <!-- ACADEMIC SYMBOLS -->
+
+        <div class="board-symbol symbol-1">
+            E = mc²
+        </div>
+
+        <div class="board-symbol symbol-2">
+            π
+        </div>
+
+        <div class="board-symbol symbol-3">
+            ∑
+        </div>
+
+        <div class="board-symbol symbol-4">
+            ∆
+        </div>
+
+        <div class="board-symbol symbol-5">
+            ∂f/∂x
+        </div>
+
+        <div class="board-symbol symbol-6">
+            λ = h/p
+        </div>
+
+        <div class="board-symbol symbol-7">
+            ∞
+        </div>
+
+        <div class="board-symbol symbol-8">
+            √x
+        </div>
+
+
+        <!-- TITLE -->
+
+        <div class="board-heading">
+
+            <h1>
+                PUSAT NOTICE BOARD
+            </h1>
+
+            <div class="heading-line"></div>
+
+        </div>
+
+
+        <!-- =================================================
+             NOTICES
+             ================================================= -->
+
+        <div class="notice-grid">
+
+
+            {% for notice in notices %}
+
+
+                {% if notice.post_type == "image" %}
+
+
+                    <!-- IMAGE NOTICE -->
+
+                    <a
+                        href="{% url 'notice_detail' notice.notice_id %}"
+                        class="image-link"
+                    >
+
+                        <article class="image-paper">
+
+                            <div class="paper-pin"></div>
+
+
+                            {% if notice.board_image %}
+
+                                <img
+                                    src="{{ notice.board_image }}"
+                                    alt="University Notice"
+                                    loading="lazy"
+                                >
+
+                            {% endif %}
+
+
+                            <div class="image-date">
+
+                                {% if notice.bs_date %}
+
+                                    <strong>
+                                        {{ notice.bs_date.formatted }} BS
+                                    </strong>
+
+                                {% endif %}
+
+
+                                {% if notice.posted_at %}
+
+                                    <span>
+                                        {{ notice.posted_at|date:"M d, Y" }} AD
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </article>
+
+                    </a>
+
+
+                {% else %}
+
+
+                    <!-- NORMAL NOTICE -->
+
+                    <article class="notice-paper">
+
+                        <div class="paper-pin"></div>
+
+
+                        {% if notice.priority == "important" %}
+
+                            <div class="important">
+                                IMPORTANT
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="notice-content">
+
+
+                            {% if notice.public_category %}
+
+                                <span class="category">
+                                    {{ notice.public_category }}
+                                </span>
+
+                            {% endif %}
+
+
+                            <h2>
+
+                                <a
+                                    href="{% url 'notice_detail' notice.notice_id %}"
+                                >
+                                    {{ notice.title }}
+                                </a>
+
+                            </h2>
+
+
+                            {% if notice.public_image %}
+
+                                <a
+                                    href="{% url 'notice_detail' notice.notice_id %}"
+                                    class="notice-image"
+                                >
+
+                                    <img
+                                        src="{{ notice.public_image }}"
+                                        alt="{{ notice.title }}"
+                                        loading="lazy"
+                                    >
+
+                                </a>
+
+                            {% endif %}
+
+
+                            {% if notice.description %}
+
+                                <p>
+                                    {{ notice.description|truncatechars:170 }}
+                                </p>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="paper-footer">
+
+                            <div class="date">
+
+                                {% if notice.bs_date %}
+
+                                    <strong>
+                                        {{ notice.bs_date.formatted }} BS
+                                    </strong>
+
+                                {% endif %}
+
+
+                                {% if notice.posted_at %}
+
+                                    <span>
+                                        {{ notice.posted_at|date:"M d, Y" }} AD
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <a
+                                href="{% url 'notice_detail' notice.notice_id %}"
+                                class="open"
+                            >
+                                →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                {% endif %}
+
+
+            {% empty %}
+
+
+                <div class="empty">
+
+                    <h2>
+                        No notices yet
+                    </h2>
+
+                    <p>
+                        University notices will appear here.
+                    </p>
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+        <div class="board-bottom">
+
+            PURBANCHAL UNIVERSITY
+            &nbsp; • &nbsp;
+            LEARN · GROW · TOGETHER
+
+        </div>
+
+
+    </section>
+
+</div>
+
+
+</body>
+</html>

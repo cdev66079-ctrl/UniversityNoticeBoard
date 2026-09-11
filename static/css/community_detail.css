@@ -1,0 +1,924 @@
+/* =========================================================
+   PUSAT COMMUNITY
+   POLISHED PAPER DETAIL PAGE
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.community-detail-page {
+    position: relative;
+
+    min-height: 100vh;
+
+    padding: 25px 20px 80px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 8% 15%,
+            rgba(255, 218, 92, .16),
+            transparent 22%
+        ),
+        radial-gradient(
+            circle at 92% 20%,
+            rgba(174, 145, 255, .14),
+            transparent 22%
+        ),
+        radial-gradient(
+            circle at 20% 90%,
+            rgba(255, 155, 196, .10),
+            transparent 20%
+        ),
+        #f8f7f3;
+}
+
+
+/* =========================================================
+   HIDE MAIN SITE NAVBAR ON DETAIL PAGE
+   Keeps this page clean like the reference design.
+   ========================================================= */
+
+body:has(.community-detail-page) .navbar {
+    display: none !important;
+}
+
+body:has(.community-detail-page) > footer {
+    display: none !important;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.community-detail-topbar {
+    position: relative;
+
+    z-index: 20;
+
+    width: min(1120px, 100%);
+
+    margin: 0 auto 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.community-back {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 11px 17px;
+
+    background: rgba(255, 255, 255, .95);
+
+    color: #181818;
+
+    border: 1px solid #dedbd4;
+
+    border-radius: 999px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 750;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, .06);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.community-back:hover {
+    transform: translateX(-4px);
+
+    box-shadow:
+        0 7px 18px rgba(0, 0, 0, .10);
+}
+
+.community-back span:first-child {
+    font-size: 19px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   MINI BRAND
+   ========================================================= */
+
+.community-brand-mini {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #181818;
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+    letter-spacing: .13em;
+}
+
+.community-brand-mini img {
+    width: 36px;
+    height: 36px;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   PAPER BOARD AREA
+   ========================================================= */
+
+.community-detail-board {
+    position: relative;
+
+    z-index: 5;
+
+    width: 100%;
+
+    padding: 35px 10px 90px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MAIN PAPER
+   ========================================================= */
+
+.community-detail-paper {
+    position: relative;
+
+    width: min(900px, 100%);
+
+    min-height: 650px;
+
+    padding: 85px 85px 80px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    transform: rotate(-.35deg);
+
+    box-shadow:
+        0 35px 70px rgba(0, 0, 0, .17),
+        0 7px 18px rgba(0, 0, 0, .11);
+
+    /* slightly irregular paper edge */
+    clip-path: polygon(
+        0.5% 0.5%,
+        99.3% 0%,
+        99.8% 20%,
+        99.2% 40%,
+        99.7% 60%,
+        99.2% 80%,
+        99.6% 99.2%,
+        80% 99.7%,
+        60% 99.2%,
+        40% 99.8%,
+        20% 99.3%,
+        0% 99.6%,
+        .5% 80%,
+        0% 60%,
+        .5% 40%,
+        0% 20%
+    );
+}
+
+
+/* =========================================================
+   PAPER COLORS
+   ========================================================= */
+
+.community-detail-paper.sticky-yellow {
+    background: #fff7b2;
+}
+
+.community-detail-paper.sticky-pink {
+    background: #ffd1df;
+}
+
+.community-detail-paper.sticky-blue {
+    background: #cce9ff;
+}
+
+.community-detail-paper.sticky-green {
+    background: #d8f1d0;
+}
+
+.community-detail-paper.sticky-orange {
+    background: #ffdbad;
+}
+
+.community-detail-paper.sticky-purple {
+    background: #e2d4ff;
+}
+
+
+/* =========================================================
+   SUBTLE PAPER TEXTURE
+   NO LINES
+   ========================================================= */
+
+.community-detail-paper::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: .22;
+
+    background-image:
+        radial-gradient(
+            rgba(80, 60, 30, .16) .6px,
+            transparent .7px
+        );
+
+    background-size: 7px 7px;
+}
+
+
+/* =========================================================
+   SOFT LIGHT ON PAPER
+   ========================================================= */
+
+.community-detail-paper::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(255,255,255,.32),
+            transparent 55%
+        );
+
+    opacity: .7;
+}
+
+
+/* =========================================================
+   PUSH PIN — SITS ABOVE THE PAPER
+   ========================================================= */
+
+.detail-push-pin {
+    position: absolute;
+
+    z-index: 20;
+
+    /* Move pin above the paper */
+    top: -22px;
+    left: 50%;
+
+    width: 30px;
+    height: 30px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 32% 27%,
+            #ffffff 0%,
+            #eeeeee 14%,
+            #c5c5c5 35%,
+            #888888 65%,
+            #4b4b4b 100%
+        );
+
+    border: 1px solid #777;
+
+    box-shadow:
+        0 6px 10px rgba(0, 0, 0, .30);
+}
+
+
+/* Pin needle */
+
+.detail-push-pin::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 23px;
+
+    width: 8px;
+    height: 18px;
+
+    transform: translateX(-50%);
+
+    background: linear-gradient(
+        to right,
+        #555,
+        #999,
+        #444
+    );
+
+    clip-path: polygon(
+        50% 100%,
+        0 0,
+        100% 0
+    );
+}
+/* =========================================================
+   PAPER CONTENT LAYER
+   ========================================================= */
+
+.community-detail-paper > * {
+    position: relative;
+
+    z-index: 4;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.community-detail-title {
+    margin: 0 0 34px;
+
+    color: #171717;
+
+    font-family:
+        "Trebuchet MS",
+        "Segoe UI",
+        sans-serif;
+
+    font-size: clamp(34px, 5vw, 58px);
+
+    line-height: 1.03;
+
+    letter-spacing: -.045em;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.community-detail-content {
+    color: #292929;
+
+    font-family:
+        "Trebuchet MS",
+        "Segoe UI",
+        sans-serif;
+
+    font-size: clamp(19px, 2.2vw, 26px);
+
+    line-height: 1.7;
+
+    letter-spacing: -.01em;
+
+    word-wrap: break-word;
+}
+
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
+.community-detail-image-container {
+    width: 100%;
+
+    margin-top: 35px;
+    margin-bottom: 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+
+/* Image box */
+.community-detail-image {
+    display: block;
+
+    width: auto;
+
+    max-width: 100%;
+
+    max-height: 520px;
+
+    object-fit: contain;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, .18),
+        0 2px 5px rgba(0, 0, 0, .08);
+}
+
+
+/* =========================================================
+   WRITER
+   ========================================================= */
+
+.community-detail-writer {
+    margin-top: 55px;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #292929;
+
+    font-family:
+        "Trebuchet MS",
+        "Segoe UI",
+        sans-serif;
+
+    font-size: clamp(18px, 2vw, 24px);
+
+    font-weight: 750;
+}
+
+.writer-line {
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   LITTLE PAPER STAR
+   ========================================================= */
+
+.paper-mini-star {
+    position: absolute !important;
+
+    top: 55px;
+    right: 70px;
+
+    color: #e6a800;
+
+    font-size: 27px;
+
+    transform: rotate(12deg);
+}
+
+.paper-bottom-doodle {
+    position: absolute !important;
+
+    right: 55px;
+    bottom: 35px;
+
+    color: #7562d8;
+
+    font-size: 28px;
+
+    transform: rotate(-15deg);
+}
+
+
+/* =========================================================
+   FLOATING DECORATIONS
+   ========================================================= */
+
+.floating-doodles {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+.doodle {
+    position: absolute;
+
+    display: block;
+
+    user-select: none;
+
+    font-weight: 900;
+}
+
+
+/* STAR 1 */
+
+.star-one {
+    top: 115px;
+    left: 7%;
+
+    color: #ffc400;
+
+    font-size: 53px;
+
+    transform: rotate(-13deg);
+
+    text-shadow:
+        2px 3px 0 rgba(0,0,0,.10);
+}
+
+
+/* STAR 2 */
+
+.star-two {
+    top: 175px;
+    right: 11%;
+
+    color: #ffbf00;
+
+    font-size: 32px;
+
+    transform: rotate(12deg);
+}
+
+
+/* STAR 3 */
+
+.star-three {
+    left: 8%;
+    bottom: 28%;
+
+    color: #7c68df;
+
+    font-size: 39px;
+
+    transform: rotate(-18deg);
+}
+
+
+/* MOON */
+
+.moon {
+    top: 105px;
+    right: 6%;
+
+    color: #f4bd17;
+
+    font-size: 64px;
+
+    transform: rotate(-12deg);
+
+    text-shadow:
+        2px 3px 0 rgba(0,0,0,.10);
+}
+
+
+/* DOLLAR */
+
+.dollar {
+    left: 9%;
+    bottom: 23%;
+
+    color: #70a65c;
+
+    font-size: 38px;
+
+    transform: rotate(-12deg);
+}
+
+
+/* HEART */
+
+.heart {
+    right: 7%;
+    top: 46%;
+
+    color: #ed5d98;
+
+    font-size: 42px;
+
+    transform: rotate(12deg);
+}
+
+
+/* SPARKLE */
+
+.sparkle {
+    right: 10%;
+    bottom: 20%;
+
+    color: #7c6adf;
+
+    font-size: 31px;
+
+    transform: rotate(20deg);
+}
+
+
+/* SUN */
+
+.sun {
+    left: 4%;
+    top: 46%;
+
+    color: #ffb800;
+
+    font-size: 31px;
+}
+
+
+/* FLOWER */
+
+.flower {
+    right: 5%;
+    bottom: 34%;
+
+    color: #ee7da9;
+
+    font-size: 29px;
+
+    transform: rotate(15deg);
+}
+
+
+/* ZIGZAG */
+
+.zigzag {
+    left: 12%;
+    bottom: 9%;
+
+    color: #4f7ee7;
+
+    font-size: 48px;
+
+    transform: rotate(-12deg);
+}
+
+
+/* SMALL DOTS */
+
+.dot-one {
+    left: 17%;
+    top: 25%;
+
+    color: #f0a900;
+
+    font-size: 22px;
+}
+
+.dot-two {
+    right: 18%;
+    bottom: 13%;
+
+    color: #8a6ce3;
+
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .community-detail-page {
+        padding:
+            15px
+            10px
+            55px;
+    }
+
+
+    .community-detail-topbar {
+        padding: 0 5px;
+
+        margin-bottom: 5px;
+    }
+
+
+    .community-brand-mini span {
+        display: none;
+    }
+
+
+    .community-brand-mini img {
+        width: 32px;
+        height: 32px;
+    }
+
+
+    .community-back {
+        padding: 9px 13px;
+
+        font-size: 13px;
+    }
+
+
+    .community-detail-board {
+        padding:
+            30px 2px
+            60px;
+    }
+
+
+    .community-detail-paper {
+        min-height: 75vh;
+
+        padding:
+            72px
+            28px
+            65px;
+
+        transform: rotate(-.2deg);
+    }
+
+
+    .community-detail-title {
+        font-size: 37px;
+
+        margin-bottom: 27px;
+    }
+
+
+    .community-detail-content {
+        font-size: 18px;
+
+        line-height: 1.65;
+    }
+
+
+    .community-detail-image-container {
+        margin-top: 28px;
+    }
+
+
+    .community-detail-image {
+        max-height: 430px;
+
+        border-radius: 6px;
+    }
+
+
+    .community-detail-writer {
+        margin-top: 42px;
+
+        font-size: 18px;
+    }
+
+
+    .paper-mini-star {
+        top: 48px;
+        right: 35px;
+
+        font-size: 21px;
+    }
+
+
+    .paper-bottom-doodle {
+        right: 30px;
+        bottom: 25px;
+
+        font-size: 22px;
+    }
+
+
+    /* Reduce surrounding decorations */
+
+    .star-one {
+        left: 2%;
+        top: 130px;
+
+        font-size: 35px;
+    }
+
+    .moon {
+        right: 1%;
+        top: 130px;
+
+        font-size: 43px;
+    }
+
+    .heart {
+        right: 2%;
+        top: 52%;
+
+        font-size: 28px;
+    }
+
+    .star-two,
+    .star-three,
+    .dollar,
+    .sparkle,
+    .sun,
+    .flower,
+    .zigzag,
+    .dot-one,
+    .dot-two {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .community-detail-paper {
+        padding:
+            68px
+            21px
+            55px;
+    }
+
+
+    .community-detail-title {
+        font-size: 31px;
+    }
+
+
+    .community-detail-content {
+        font-size: 16px;
+
+        line-height: 1.65;
+    }
+
+
+    .community-detail-writer {
+        font-size: 16px;
+    }
+}
+
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+@media print {
+
+    .community-detail-page {
+        padding: 0;
+
+        background: white;
+    }
+
+
+    .community-detail-topbar,
+    .floating-doodles {
+        display: none !important;
+    }
+
+
+    .community-detail-board {
+        padding: 0;
+    }
+
+
+    .community-detail-paper {
+        width: 100%;
+
+        min-height: 100vh;
+
+        box-shadow: none;
+
+        transform: none;
+    }
+}

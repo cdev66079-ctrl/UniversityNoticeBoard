@@ -1,0 +1,495 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Notice | PUSAT Notice Board</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f1ea;
+            font-family: Arial, sans-serif;
+            color: #222;
+        }
+
+        .page {
+            max-width: 900px;
+            margin: auto;
+            padding: 30px 20px 60px;
+        }
+
+        .top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .back {
+            text-decoration: none;
+            background: white;
+            border: 1px solid #ddd;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 5px 0 0;
+            color: #777;
+        }
+
+        .form-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            padding: 28px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .field {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #333;
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .current-file {
+            margin-top: 8px;
+            padding: 12px;
+            background: #f7f7f7;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .current-file a {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .image-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fafafa;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-label {
+            padding: 8px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .save-btn {
+            flex: 1;
+            border: none;
+            background: #222;
+            color: white;
+            padding: 14px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .save-btn:hover {
+            background: #444;
+        }
+
+        .cancel-btn {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 20px;
+            border-radius: 9px;
+            background: #eee;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .notice-id {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            background: #eee;
+            color: #666;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+
+            .page {
+                padding: 20px 12px 40px;
+            }
+
+            .top {
+                align-items: flex-start;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="top">
+
+        <a href="{% url 'admin_notices' %}" class="back">
+            ← Notices
+        </a>
+
+        <div class="header">
+            <h1>✏️ Edit Notice</h1>
+            <p>Update the university notice.</p>
+        </div>
+
+    </div>
+
+
+    <div class="form-card">
+
+        <div class="notice-id">
+            Notice ID: {{ notice.notice_id }}
+        </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <!-- TITLE -->
+
+            <div class="field">
+
+                <label for="title">
+                    Notice Title
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="{{ notice.title }}"
+                    maxlength="200"
+                    required
+                >
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="field">
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Write the notice details..."
+                >{{ notice.description|default_if_none:"" }}</textarea>
+
+            </div>
+
+
+            <!-- CATEGORY / PRIORITY -->
+
+            <div class="row">
+
+                <div class="field">
+
+                    <label for="category_id">
+                        Category
+                    </label>
+
+                    <select
+                        id="category_id"
+                        name="category_id"
+                    >
+
+                        <option value="">
+                            No Category
+                        </option>
+
+                        {% for category in categories %}
+
+                            <option
+                                value="{{ category.category_id }}"
+                                {% if notice.category_id == category.category_id %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ category.category_name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="priority">
+                        Priority
+                    </label>
+
+                    <select
+                        id="priority"
+                        name="priority"
+                    >
+
+                        <option
+                            value="normal"
+                            {% if notice.priority == "normal" %}selected{% endif %}
+                        >
+                            Normal
+                        </option>
+
+                        <option
+                            value="important"
+                            {% if notice.priority == "important" %}selected{% endif %}
+                        >
+                            Important
+                        </option>
+
+                        <option
+                            value="urgent"
+                            {% if notice.priority == "urgent" %}selected{% endif %}
+                        >
+                            Urgent
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- AUDIENCE -->
+
+            <div class="field">
+
+                <label for="audience">
+                    Audience
+                </label>
+
+                <input
+                    type="text"
+                    id="audience"
+                    name="audience"
+                    value="{{ notice.audience|default:'Everyone' }}"
+                    placeholder="Everyone"
+                >
+
+            </div>
+
+
+            <!-- CURRENT PDF -->
+
+            {% if notice.attachment %}
+
+                <div class="field">
+
+                    <label>
+                        Current Attachment
+                    </label>
+
+                    <div class="current-file">
+
+                        {% if notice.attachment_type == "pdf" %}
+
+                            📄 PDF attached
+
+                            <br>
+
+                            <a
+                                href="{{ notice.attachment }}"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                👁 View PDF
+                            </a>
+
+                        {% else %}
+
+                            📎 Attachment available
+
+                            <br>
+
+                            <a
+                                href="{{ notice.attachment }}"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                Open Attachment
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- CURRENT IMAGES -->
+
+            {% if images %}
+
+                <div class="field">
+
+                    <label>
+                        Current Notice Images
+                    </label>
+
+                    <div class="images">
+
+                        {% for image in images %}
+
+                            <div class="image-card">
+
+                                <a
+                                    href="{{ image.image_path }}"
+                                    target="_blank"
+                                >
+
+                                    <img
+                                        src="{{ image.image_path }}"
+                                        alt="Notice image"
+                                    >
+
+                                </a>
+
+                                <div class="image-label">
+                                    Image {{ forloop.counter }}
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <a
+                    href="{% url 'admin_notices' %}"
+                    class="cancel-btn"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    💾 Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

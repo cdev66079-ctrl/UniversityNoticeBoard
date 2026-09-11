@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>University Notices | PUSAT Admin</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 250px;
+            height: 100vh;
+
+            background: #18212b;
+            color: white;
+
+            padding: 25px 15px;
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: bold;
+
+            padding: 10px;
+            margin-bottom: 30px;
+        }
+
+        .brand span {
+            color: #f5c542;
+        }
+
+        .admin-info {
+            background: #222e3a;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+        }
+
+        .admin-info small {
+            color: #9fa9b3;
+        }
+
+        .admin-info strong {
+            display: block;
+            margin-top: 5px;
+        }
+
+        .nav-title {
+            color: #7f8b96;
+
+            font-size: 12px;
+
+            margin: 20px 10px 8px;
+
+            text-transform: uppercase;
+        }
+
+        .nav a {
+            display: block;
+
+            color: #dce3e8;
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 8px;
+
+            margin-bottom: 5px;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: #293744;
+        }
+
+        .logout {
+            color: #ff8f8f !important;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 250px;
+            padding: 35px;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .page-header {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+        }
+
+        .page-header p {
+            color: #6d7780;
+            margin-top: 6px;
+        }
+
+        .create-btn {
+            background: #2878d0;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 12px 18px;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .create-btn:hover {
+            background: #1768bd;
+        }
+
+
+        /* =========================
+           FILTER BAR
+        ========================= */
+
+        .filter-box {
+            background: white;
+
+            padding: 18px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.05);
+
+            margin-bottom: 22px;
+        }
+
+        .filters {
+            display: grid;
+
+            grid-template-columns:
+                2fr 1fr 1fr 1fr auto auto;
+
+            gap: 10px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border: 1px solid #dce1e6;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            background: white;
+        }
+
+        .filters input:focus,
+        .filters select:focus {
+            outline: none;
+
+            border-color: #2878d0;
+        }
+
+        .filter-btn {
+            border: none;
+
+            background: #2878d0;
+
+            color: white;
+
+            padding: 0 18px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        .clear-btn {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 0 15px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            color: #555;
+
+            background: #eef1f4;
+        }
+
+
+        /* =========================
+           NOTICE TABLE
+        ========================= */
+
+        .notice-panel {
+            background: white;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.05);
+
+            overflow: hidden;
+        }
+
+        .notice-count {
+            padding: 18px 22px;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+
+            color: #777;
+        }
+
+        .notice-row {
+            display: grid;
+
+            grid-template-columns:
+                75px 1fr 130px 110px 150px;
+
+            align-items: center;
+
+            gap: 18px;
+
+            padding: 15px 22px;
+
+            border-bottom: 1px solid #eee;
+
+            transition: 0.2s;
+        }
+
+        .notice-row:hover {
+            background: #fafcff;
+        }
+
+        .notice-row:last-child {
+            border-bottom: none;
+        }
+
+
+        /* =========================
+           IMAGE
+        ========================= */
+
+        .notice-image {
+            width: 64px;
+            height: 64px;
+
+            border-radius: 9px;
+
+            overflow: hidden;
+
+            background: #f0f3f6;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+        .notice-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+        .placeholder {
+            font-size: 27px;
+        }
+
+
+        /* =========================
+           NOTICE INFO
+        ========================= */
+
+        .notice-title {
+            font-size: 15px;
+
+            font-weight: bold;
+
+            margin-bottom: 6px;
+
+            color: #222;
+        }
+
+        .notice-date {
+            color: #888;
+
+            font-size: 12px;
+
+            margin-bottom: 6px;
+        }
+
+        .important {
+            display: inline-block;
+
+            background: #fff4d6;
+
+            color: #b57b00;
+
+            padding: 4px 8px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           CATEGORY
+        ========================= */
+
+        .category {
+            font-size: 13px;
+
+            color: #555;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            text-align: center;
+        }
+
+        .status-active {
+            background: #e8f8ef;
+
+            color: #15945a;
+        }
+
+        .status-inactive {
+            background: #eeeeee;
+
+            color: #777;
+        }
+
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .actions {
+            display: flex;
+
+            gap: 7px;
+
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 7px 10px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: bold;
+        }
+
+        .view {
+            background: #e8f3ff;
+            color: #2878d0;
+        }
+
+        .edit {
+            background: #fff4d6;
+            color: #9a6a00;
+        }
+
+        .delete {
+            background: #ffe9e9;
+            color: #d33b3b;
+
+            border: none;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+            padding: 60px 20px;
+
+            text-align: center;
+
+            color: #888;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .filters {
+                grid-template-columns:
+                    1fr 1fr 1fr;
+            }
+
+            .notice-row {
+                grid-template-columns:
+                    65px 1fr 110px;
+            }
+
+            .notice-actions {
+                grid-column: 2 / -1;
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+            .page-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-btn,
+            .clear-btn {
+                padding: 11px;
+            }
+
+            .notice-row {
+                grid-template-columns: 55px 1fr;
+            }
+
+            .notice-category,
+            .notice-status,
+            .notice-actions {
+                grid-column: 2;
+            }
+
+            .actions {
+                flex-wrap: wrap;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+        PUSAT <span>ADMIN</span>
+    </div>
+
+    <div class="admin-info">
+
+        <small>Logged in as</small>
+
+        <strong>
+            {{ admin_name }}
+        </strong>
+
+    </div>
+
+
+    <div class="nav-title">
+        CONTROL CENTER
+    </div>
+
+    <nav class="nav">
+
+        <a href="{% url 'admin_dashboard' %}">
+            📊 Dashboard
+        </a>
+
+        <a
+            href="{% url 'admin_notices' %}"
+            class="active"
+        >
+            📢 University Notices
+        </a>
+
+        <a href="{% url 'admin_community' %}">
+            👥 Community
+        </a>
+
+        <a href="{% url 'admin_comments' %}">
+            💬 Comments
+        </a>
+
+        <a href="{% url 'admin_categories' %}">
+            🏷 Categories
+        </a>
+
+    </nav>
+
+
+    <div class="nav-title">
+        WEBSITE
+    </div>
+
+    <nav class="nav">
+
+        <a
+            href="{% url 'home' %}"
+            target="_blank"
+        >
+            🌐 Open Website
+        </a>
+
+        <a
+            href="{% url 'admin_logout' %}"
+            class="logout"
+        >
+            🚪 Logout
+        </a>
+
+    </nav>
+
+</aside>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                University Notices
+            </h1>
+
+            <p>
+                Create, edit and manage official university notices.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'admin_create_notice' %}"
+            class="create-btn"
+        >
+            + Create Notice
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================
+         FILTERS
+    ========================= -->
+
+    <div class="filter-box">
+
+        <form method="GET">
+
+            <div class="filters">
+
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="🔎 Search notices..."
+                    value="{{ search }}"
+                >
+
+
+                <select name="category">
+
+                    <option value="">
+                        All Categories
+                    </option>
+
+                    {% for category in categories %}
+
+                        <option
+                            value="{{ category.category_id }}"
+                            {% if selected_category == category.category_id|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+
+                            {{ category.category_name }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <select name="status">
+
+                    <option value="">
+                        All Status
+                    </option>
+
+                    <option
+                        value="active"
+                        {% if selected_status == "active" %}
+                            selected
+                        {% endif %}
+                    >
+                        Active
+                    </option>
+
+                    <option
+                        value="inactive"
+                        {% if selected_status == "inactive" %}
+                            selected
+                        {% endif %}
+                    >
+                        Inactive
+                    </option>
+
+                </select>
+
+
+                <select name="priority">
+
+                    <option value="">
+                        All Priority
+                    </option>
+
+                    <option
+                        value="normal"
+                        {% if selected_priority == "normal" %}
+                            selected
+                        {% endif %}
+                    >
+                        Normal
+                    </option>
+
+                    <option
+                        value="important"
+                        {% if selected_priority == "important" %}
+                            selected
+                        {% endif %}
+                    >
+                        Important
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="submit"
+                    class="filter-btn"
+                >
+                    Filter
+                </button>
+
+
+                <a
+                    href="{% url 'admin_notices' %}"
+                    class="clear-btn"
+                >
+                    Clear
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =========================
+         NOTICE LIST
+    ========================= -->
+
+    <div class="notice-panel">
+
+
+        <div class="notice-count">
+
+            Showing
+            <strong>{{ notices|length }}</strong>
+            notice{{ notices|length|pluralize }}
+
+        </div>
+
+
+
+        {% for notice in notices %}
+
+        <div class="notice-row">
+
+
+            <!-- IMAGE -->
+
+            <div class="notice-image">
+
+                {% if notice.dashboard_image %}
+
+                    <img
+                        src="{{ notice.dashboard_image }}"
+                        alt="{{ notice.title }}"
+                    >
+
+                {% else %}
+
+                    <div class="placeholder">
+                        📄
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+
+            <!-- INFORMATION -->
+
+            <div>
+
+                <div class="notice-title">
+                    {{ notice.title }}
+                </div>
+
+                <div class="notice-date">
+
+                    📅
+                    {{ notice.posted_at|date:"M d, Y" }}
+
+                </div>
+
+
+                {% if notice.priority == "important" %}
+
+                    <span class="important">
+                        ⭐ Important
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+
+            <!-- CATEGORY -->
+
+            <div class="notice-category">
+
+                <span class="category">
+
+                    📢
+                    {{ notice.dashboard_category }}
+
+                </span>
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div class="notice-status">
+
+                {% if notice.status == "active" %}
+
+                    <span class="status status-active">
+                        Active
+                    </span>
+
+                {% else %}
+
+                    <span class="status status-inactive">
+                        {{ notice.status|title }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+
+            <!-- ACTIONS -->
+
+            <div class="notice-actions">
+
+                <div class="actions">
+
+
+                    <a
+                        href="{% url 'notice_detail' notice.notice_id %}"
+                        class="action-btn view"
+                        target="_blank"
+                    >
+                        View
+                    </a>
+
+
+                    <a
+                        href="{% url 'admin_edit_notice' notice.notice_id %}"
+                        class="action-btn edit"
+                    >
+                        Edit
+                    </a>
+
+
+                    <form
+                        method="POST"
+                        action="{% url 'admin_delete_notice' notice.notice_id %}"
+                        onsubmit="return confirm('Delete this notice permanently?');"
+                    >
+
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="action-btn delete"
+                        >
+                            Delete
+                        </button>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        {% empty %}
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                📭
+            </div>
+
+            <h3>
+                No notices found
+            </h3>
+
+            <p>
+                Try changing your search or filters.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
+</main>
+
+</body>
+</html>

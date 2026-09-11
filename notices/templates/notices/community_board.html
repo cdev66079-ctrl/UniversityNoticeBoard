@@ -1,0 +1,329 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Community Board | PUSAT Notice Board</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/community_board.css' %}?v=10">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+</head>
+
+<body class="community-page">
+
+<!-- ========================= NAVBAR ========================= -->
+
+<nav class="cb-navbar">
+
+    <div class="cb-brand">
+
+        <img src="{% static 'images/pusat-logo.png' %}"
+             alt="PUSAT Logo">
+
+        <span>PUSAT Notice Board</span>
+
+    </div>
+
+    <div class="cb-nav-links">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'university_notices' %}">
+            University Notices
+        </a>
+
+        <a href="{% url 'community_board' %}" class="cb-active">
+            Community
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ========================= PAGE ========================= -->
+
+<div class="cb-page">
+
+    <!-- ========================= HEADER ========================= -->
+
+    <header class="cb-header">
+
+        <div class="cb-title-paper">
+
+            <div class="cb-pin cb-red"></div>
+
+            <div class="cb-small-line cb-line-left">
+                〰
+            </div>
+
+            <h1>COMMUNITY BOARD</h1>
+
+            <p>
+                Anything from the people of PUSAT ♡
+            </p>
+
+            <div class="cb-small-line cb-line-right">
+                〰
+            </div>
+
+        </div>
+
+        <div class="cb-header-message">
+            Share<br>
+            Connect<br>
+            Belong ♡
+        </div>
+
+    </header>
+
+
+    <!-- ========================= BUTTON ========================= -->
+
+    <div class="cb-action">
+
+        <a href="{% url 'create_community_post' %}"
+           class="cb-create">
+
+            <span>＋</span>
+
+            Pin Something
+
+        </a>
+
+    </div>
+
+
+
+
+    <!-- ========================= CORK BOARD ========================= -->
+
+    <section class="cb-board">
+
+
+        <!-- Decorative doodles -->
+
+        <div class="cb-doodle cb-doodle-1">♡</div>
+        <div class="cb-doodle cb-doodle-2">✦</div>
+        <div class="cb-doodle cb-doodle-3">☘</div>
+        <div class="cb-doodle cb-doodle-4">〰</div>
+
+
+        {% if posts %}
+
+            <div class="cb-papers">
+
+
+                {% for post in posts %}
+
+                    <article class="
+                        cb-paper
+                        cb-paper-{{ forloop.counter }}
+                        {% if post.paper_style %}
+                            {{ post.paper_style }}
+                        {% else %}
+                            sticky-yellow
+                        {% endif %}
+                    ">
+
+
+                        <!-- PIN -->
+
+                        <div class="cb-paper-pin">
+
+                            <div class="cb-pin-head"></div>
+
+                        </div>
+
+
+                        <!-- OPTIONAL TAPE -->
+
+                        {% if forloop.counter|divisibleby:4 %}
+
+                            <div class="cb-tape"></div>
+
+                        {% endif %}
+
+
+                        <!-- CONTENT -->
+
+                        <div class="cb-paper-inner">
+
+
+                            {% if post.public_category %}
+
+                                <div class="cb-category">
+                                    {{ post.public_category }}
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- TITLE -->
+
+                            <a href="{% url 'community_detail' post.post_id %}"
+                               class="cb-title">
+
+                                {{ post.title }}
+
+                            </a>
+
+
+                            <!-- IMAGE -->
+
+                            {% if post.public_image %}
+
+                                <div class="cb-image">
+
+                                    <img src="{{ post.public_image }}"
+                                         alt="{{ post.title }}">
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- TEXT -->
+
+                            {% if post.content %}
+
+                                <div class="cb-text">
+                                    {{ post.content|linebreaksbr }}
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- AUTHOR -->
+
+                            <div class="cb-author">
+
+                                — {{ post.display_name|default:"Anonymous" }}
+
+                            </div>
+
+
+                            <!-- DATE -->
+
+                            {% if post.bs_date %}
+
+                                <div class="cb-date">
+
+                                    <strong>
+                                        {{ post.bs_date.formatted }} BS
+                                    </strong>
+
+                                    <span>
+                                        {{ post.posted_at|date:"M d, Y" }} AD
+                                    </span>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- COMMENTS -->
+
+                            {% if post.comment_count %}
+
+                                <div class="cb-comments">
+
+                                    <span>💬</span>
+
+                                    {{ post.comment_count }}
+
+                                    {% if post.comment_count == 1 %}
+                                        comment
+                                    {% else %}
+                                        comments
+                                    {% endif %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- OPEN -->
+
+                            <a href="{% url 'community_detail' post.post_id %}"
+                               class="cb-open">
+
+                                Open note →
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- ================= EMPTY BOARD ================= -->
+
+            <div class="cb-empty">
+
+                <div class="cb-empty-paper">
+
+                    <div class="cb-paper-pin">
+                        <div class="cb-pin-head"></div>
+                    </div>
+
+                    <div class="cb-empty-icon">
+                        📌
+                    </div>
+
+                    <h2>
+                        The board is waiting...
+                    </h2>
+
+                    <p>
+                        Be the first person to pin something here.
+                    </p>
+
+                    <a href="{% url 'create_community_post' %}">
+                        Pin your first post
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="cb-bottom-note">
+            Better together ♡
+        </div>
+
+    </section>
+
+
+    <!-- ========================= FOOTER ========================= -->
+
+    <footer class="cb-footer">
+
+        PUSAT Notice Board · Community Space
+
+    </footer>
+
+</div>
+
+</body>
+</html>

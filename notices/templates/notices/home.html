@@ -1,0 +1,2764 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="PUSAT Notice Board - Official university notices and community platform."
+    >
+
+    <title>PUSAT Notice Board</title>
+
+
+    <!-- =====================================================
+         NOTIFICATION CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/notification.css' %}?v=3"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ====================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #e8dcc7;
+
+            color:
+                #29231d;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
+        .header {
+            background:
+                #172554;
+
+            color:
+                white;
+
+            padding:
+                14px 35px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                1000;
+        }
+
+
+        .brand {
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            color:
+                white;
+
+            text-decoration:
+                none;
+        }
+
+
+        .brand img {
+            width:
+                48px;
+
+            height:
+                48px;
+
+            object-fit:
+                contain;
+
+            background:
+                white;
+
+            border-radius:
+                8px;
+
+            padding:
+                3px;
+        }
+
+
+        .brand h1 {
+            font-size:
+                21px;
+        }
+
+
+        .brand span {
+            display:
+                block;
+
+            font-size:
+                11px;
+
+            opacity:
+                .7;
+
+            margin-top:
+                2px;
+        }
+
+
+        /* =====================================================
+           HEADER LINKS
+        ====================================================== */
+
+        .header-links {
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+        }
+
+
+        .header-links > a {
+            color:
+                white;
+
+            text-decoration:
+                none;
+
+            padding:
+                9px 13px;
+
+            border-radius:
+                7px;
+
+            font-size:
+                13px;
+
+            white-space:
+                nowrap;
+        }
+
+
+        .header-links > a:hover {
+            background:
+                rgba(255,255,255,.12);
+        }
+
+
+        .admin-link {
+            border:
+                1px solid
+                rgba(255,255,255,.3);
+        }
+
+
+        /* =====================================================
+           NOTIFICATION BELL
+        ====================================================== */
+
+        .notification-wrapper {
+            position:
+                relative;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            margin-left:
+                4px;
+        }
+
+
+        .notification-bell-btn {
+            position:
+                relative;
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+            color:
+                white;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            cursor:
+                pointer;
+
+            font-size:
+                21px;
+
+            padding:
+                0;
+
+            margin:
+                0;
+
+            border-radius:
+                50%;
+
+            transition:
+                background .2s ease,
+                transform .2s ease;
+        }
+
+
+        .notification-bell-btn:hover {
+            background:
+                rgba(255,255,255,.12);
+
+            transform:
+                scale(1.05);
+        }
+
+
+        .notification-badge {
+            position:
+                absolute;
+
+            top:
+                1px;
+
+            right:
+                -1px;
+
+            min-width:
+                17px;
+
+            height:
+                17px;
+
+            padding:
+                0 4px;
+
+            border-radius:
+                20px;
+
+            background:
+                #dc2626;
+
+            color:
+                white;
+
+            border:
+                2px solid
+                #172554;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size:
+                8px;
+
+            font-weight:
+                bold;
+        }
+
+
+        /* =====================================================
+           NOTIFICATION DROPDOWN
+        ====================================================== */
+
+        .notification-dropdown {
+            display:
+                none;
+
+            position:
+                absolute;
+
+            top:
+                calc(100% + 10px);
+
+            right:
+                0;
+
+            width:
+                340px;
+
+            background:
+                white;
+
+            color:
+                #29231d;
+
+            border:
+                1px solid
+                #ddd;
+
+            border-radius:
+                10px;
+
+            overflow:
+                hidden;
+
+            box-shadow:
+                0 12px 30px
+                rgba(0,0,0,.28);
+
+            z-index:
+                99999;
+        }
+
+
+        .notification-dropdown.notification-open {
+            display:
+                block;
+        }
+
+
+        /* =====================================================
+           NOTIFICATION HEADER
+        ====================================================== */
+
+        .notification-dropdown-header {
+            min-height:
+                48px;
+
+            padding:
+                0 14px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            background:
+                #f7f7f7;
+
+            border-bottom:
+                1px solid
+                #e5e5e5;
+        }
+
+
+        .notification-dropdown-header strong {
+            font-size:
+                14px;
+
+            color:
+                #222;
+        }
+
+
+        .notification-dropdown-header form {
+            margin:
+                0;
+        }
+
+
+        .notification-dropdown-header button {
+            border:
+                none;
+
+            background:
+                transparent;
+
+            color:
+                #1d4ed8;
+
+            font-size:
+                10px;
+
+            font-weight:
+                bold;
+
+            cursor:
+                pointer;
+
+            padding:
+                5px;
+        }
+
+
+        .notification-dropdown-header button:hover {
+            text-decoration:
+                underline;
+        }
+
+
+        /* =====================================================
+           NOTIFICATION LIST
+        ====================================================== */
+
+        .notification-items {
+            max-height:
+                360px;
+
+            overflow-y:
+                auto;
+        }
+
+
+        .notification-form {
+            margin:
+                0;
+
+            padding:
+                0;
+
+            display:
+                block;
+        }
+
+
+        .notification-item {
+            position:
+                relative;
+
+            width:
+                100%;
+
+            min-height:
+                70px;
+
+            padding:
+                11px 13px;
+
+            border:
+                none;
+
+            border-bottom:
+                1px solid
+                #eeeeee;
+
+            background:
+                white;
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            gap:
+                10px;
+
+            text-align:
+                left;
+
+            cursor:
+                pointer;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+
+        .notification-item:hover {
+            background:
+                #f8f8f8;
+        }
+
+
+        .notification-item.notification-unread {
+            background:
+                #fff9eb;
+        }
+
+
+        /* =====================================================
+           NOTIFICATION ICON
+        ====================================================== */
+
+        .notification-item-icon {
+            width:
+                31px;
+
+            height:
+                31px;
+
+            flex-shrink:
+                0;
+
+            border-radius:
+                50%;
+
+            background:
+                #f0e1bd;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                14px;
+        }
+
+
+        /* =====================================================
+           NOTIFICATION TEXT
+        ====================================================== */
+
+        .notification-item-text {
+            flex:
+                1;
+
+            min-width:
+                0;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                3px;
+        }
+
+
+        .notification-item-text strong {
+            font-size:
+                11px;
+
+            line-height:
+                1.35;
+
+            color:
+                #222;
+        }
+
+
+        .notification-item-text span {
+            font-size:
+                10px;
+
+            line-height:
+                1.4;
+
+            color:
+                #555;
+        }
+
+
+        .notification-item-text small {
+            font-size:
+                8px;
+
+            color:
+                #999;
+        }
+
+
+        /* =====================================================
+           UNREAD DOT
+        ====================================================== */
+
+        .notification-unread-dot {
+            width:
+                7px;
+
+            height:
+                7px;
+
+            flex-shrink:
+                0;
+
+            margin-top:
+                5px;
+
+            border-radius:
+                50%;
+
+            background:
+                #dc2626;
+        }
+
+
+        /* =====================================================
+           EMPTY NOTIFICATIONS
+        ====================================================== */
+
+        .notification-empty {
+            padding:
+                35px 20px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            text-align:
+                center;
+
+            gap:
+                7px;
+        }
+
+
+        .notification-empty > span {
+            font-size:
+                28px;
+
+            opacity:
+                .5;
+        }
+
+
+        .notification-empty strong {
+            font-size:
+                12px;
+
+            color:
+                #444;
+        }
+
+
+        .notification-empty small {
+            font-size:
+                9px;
+
+            color:
+                #999;
+        }
+
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .hero {
+            max-width:
+                1200px;
+
+            margin:
+                35px auto 20px;
+
+            padding:
+                0 20px;
+        }
+
+
+        .hero h2 {
+            font-family:
+                Georgia,
+                serif;
+
+            font-size:
+                38px;
+
+            color:
+                #422d1c;
+
+            margin-bottom:
+                8px;
+        }
+
+
+        .hero p {
+            color:
+                #665b50;
+
+            font-size:
+                15px;
+        }
+
+
+        /* =====================================================
+           UNIVERSITY BOARD
+        ====================================================== */
+
+        .board {
+            max-width:
+                1200px;
+
+            margin:
+                25px auto 60px;
+
+            padding:
+                28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #a96f43,
+                    #c18a59,
+                    #a97045
+                );
+
+            border:
+                12px solid
+                #5b3924;
+
+            border-radius:
+                10px;
+
+            box-shadow:
+                0 15px 35px
+                rgba(0,0,0,.25);
+
+            position:
+                relative;
+        }
+
+
+        .board-title {
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin-bottom:
+                25px;
+
+            color:
+                white;
+        }
+
+
+        .board-title h2 {
+            font-family:
+                Georgia,
+                serif;
+
+            font-size:
+                25px;
+        }
+
+
+        .board-title a {
+            color:
+                white;
+
+            text-decoration:
+                none;
+
+            background:
+                rgba(0,0,0,.25);
+
+            padding:
+                9px 13px;
+
+            border-radius:
+                7px;
+
+            font-size:
+                13px;
+        }
+
+
+        .board-title a:hover {
+            background:
+                rgba(0,0,0,.4);
+        }
+
+
+        /* =====================================================
+           NOTICE GRID
+        ====================================================== */
+
+        .notice-grid {
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                25px;
+        }
+
+
+        /* =====================================================
+           NORMAL NOTICE PAPER
+        ====================================================== */
+
+        .paper {
+            background:
+                #fffdf5;
+
+            min-height:
+                280px;
+
+            padding:
+                25px 21px 22px;
+
+            position:
+                relative;
+
+            box-shadow:
+                3px 7px 12px
+                rgba(0,0,0,.25);
+
+            transform:
+                rotate(-1deg);
+
+            transition:
+                .25s ease;
+
+            overflow:
+                hidden;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+        }
+
+
+        .paper:nth-child(2n) {
+            transform:
+                rotate(1.2deg);
+
+            background:
+                #fffefb;
+        }
+
+
+        .paper:nth-child(3n) {
+            transform:
+                rotate(-.5deg);
+
+            background:
+                #fff8df;
+        }
+
+
+        .paper:hover {
+            transform:
+                rotate(0deg)
+                translateY(-7px);
+
+            box-shadow:
+                5px 13px 20px
+                rgba(0,0,0,.3);
+
+            z-index:
+                5;
+        }
+
+
+        /* =====================================================
+           PIN
+        ====================================================== */
+
+        .pin {
+            position:
+                absolute;
+
+            top:
+                9px;
+
+            left:
+                50%;
+
+            transform:
+                translateX(-50%);
+
+            width:
+                17px;
+
+            height:
+                17px;
+
+            border-radius:
+                50%;
+
+            background:
+                #b91c1c;
+
+            border:
+                2px solid
+                #7f1d1d;
+
+            box-shadow:
+                1px 2px 3px
+                rgba(0,0,0,.35);
+
+            z-index:
+                3;
+        }
+
+
+        .pin::after {
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                6px;
+
+            height:
+                6px;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(255,255,255,.65);
+
+            top:
+                2px;
+
+            left:
+                3px;
+        }
+
+
+        /* =====================================================
+           CATEGORY
+        ====================================================== */
+
+        .paper-category {
+            display:
+                inline-block;
+
+            width:
+                fit-content;
+
+            background:
+                #e0e7ff;
+
+            color:
+                #3730a3;
+
+            font-size:
+                10px;
+
+            font-weight:
+                bold;
+
+            padding:
+                5px 8px;
+
+            border-radius:
+                12px;
+
+            margin-top:
+                5px;
+
+            margin-bottom:
+                10px;
+
+            text-transform:
+                uppercase;
+        }
+
+
+        /* =====================================================
+           NOTICE TITLE
+        ====================================================== */
+
+        .paper h3 {
+            font-family:
+                Georgia,
+                serif;
+
+            font-size:
+                20px;
+
+            line-height:
+                1.25;
+
+            color:
+                #33261b;
+
+            margin-bottom:
+                10px;
+        }
+
+
+        .paper h3 a {
+            color:
+                inherit;
+
+            text-decoration:
+                none;
+        }
+
+
+        .paper h3 a:hover {
+            text-decoration:
+                underline;
+        }
+
+
+        /* =====================================================
+           DESCRIPTION
+        ====================================================== */
+
+        .paper-description {
+            color:
+                #5d5145;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.55;
+
+            margin-bottom:
+                14px;
+        }
+
+
+        /* =====================================================
+           NORMAL NOTICE IMAGE
+        ====================================================== */
+
+        .notice-image {
+            width:
+                100%;
+
+            max-height:
+                180px;
+
+            object-fit:
+                cover;
+
+            display:
+                block;
+
+            margin:
+                8px 0 14px;
+
+            border:
+                1px solid
+                #d6cbb8;
+
+            cursor:
+                pointer;
+        }
+
+
+        /* =====================================================
+           NORMAL PAPER FOOTER
+        ====================================================== */
+
+        .paper-footer {
+            border-top:
+                1px dashed
+                #cfc2ad;
+
+            padding-top:
+                10px;
+
+            margin-top:
+                auto;
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            font-size:
+                11px;
+
+            color:
+                #817568;
+        }
+
+
+        .read-more {
+            color:
+                #1d4ed8;
+
+            font-weight:
+                bold;
+
+            text-decoration:
+                none;
+        }
+
+
+        .read-more:hover {
+            text-decoration:
+                underline;
+        }
+
+
+        /* =====================================================
+           IMPORTANT
+        ====================================================== */
+
+        .important {
+            position:
+                absolute;
+
+            top:
+                35px;
+
+            right:
+                -28px;
+
+            background:
+                #dc2626;
+
+            color:
+                white;
+
+            font-size:
+                10px;
+
+            font-weight:
+                bold;
+
+            padding:
+                5px 35px;
+
+            transform:
+                rotate(38deg);
+
+            z-index:
+                4;
+        }
+
+
+        /* =====================================================
+           IMAGE-ONLY NOTICE PIN
+        ====================================================== */
+
+        .image-pin-link {
+            display:
+                block;
+
+            text-decoration:
+                none;
+
+            color:
+                inherit;
+
+            position:
+                relative;
+        }
+
+
+        .image-pin-paper {
+            position:
+                relative;
+
+            background:
+                #fffdf5;
+
+            padding:
+                25px 18px 16px;
+
+            box-shadow:
+                3px 7px 12px
+                rgba(0,0,0,.25);
+
+            transform:
+                rotate(1deg);
+
+            transition:
+                .25s ease;
+
+            overflow:
+                hidden;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+        }
+
+
+        .image-pin-link:nth-child(2n)
+        .image-pin-paper {
+            transform:
+                rotate(-1.2deg);
+
+            background:
+                #fffefb;
+        }
+
+
+        .image-pin-link:nth-child(3n)
+        .image-pin-paper {
+            transform:
+                rotate(.5deg);
+
+            background:
+                #fff8df;
+        }
+
+
+        .image-pin-paper:hover {
+            transform:
+                rotate(0deg)
+                translateY(-7px);
+
+            box-shadow:
+                5px 13px 20px
+                rgba(0,0,0,.3);
+
+            z-index:
+                5;
+        }
+
+
+        /* =====================================================
+           IMAGE PIN - IMAGE
+        ====================================================== */
+
+        .image-pin-photo {
+            display:
+                block;
+
+            width:
+                100%;
+
+            max-height:
+                280px;
+
+            object-fit:
+                contain;
+
+            background:
+                #ffffff;
+
+            border:
+                1px solid
+                #d6cbb8;
+
+            margin:
+                5px auto 0;
+        }
+
+
+        /* =====================================================
+           IMAGE PIN - DATE
+        ====================================================== */
+
+        .image-pin-date {
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                3px;
+
+            border-top:
+                1px dashed
+                #cfc2ad;
+
+            padding-top:
+                10px;
+
+            margin-top:
+                12px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+        }
+
+
+        .image-pin-date strong {
+            color:
+                #493525;
+
+            font-size:
+                11px;
+        }
+
+
+        .image-pin-date span {
+            color:
+                #8a7c6d;
+
+            font-size:
+                10px;
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ====================================================== */
+
+        .empty {
+            grid-column:
+                1 / -1;
+
+            text-align:
+                center;
+
+            background:
+                rgba(255,255,255,.85);
+
+            padding:
+                55px 20px;
+
+            color:
+                #756858;
+
+            border-radius:
+                8px;
+        }
+
+
+        .empty-icon {
+            font-size:
+                45px;
+
+            margin-bottom:
+                10px;
+        }
+
+
+        /* =====================================================
+           COMMUNITY
+        ====================================================== */
+
+        .community-section {
+            max-width:
+                1200px;
+
+            margin:
+                0 auto 60px;
+
+            padding:
+                0 20px;
+        }
+
+
+        .community-header {
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin-bottom:
+                18px;
+        }
+
+
+        .community-header h2 {
+            font-family:
+                Georgia,
+                serif;
+
+            font-size:
+                28px;
+
+            color:
+                #422d1c;
+        }
+
+
+        .community-header a {
+            background:
+                #172554;
+
+            color:
+                white;
+
+            text-decoration:
+                none;
+
+            padding:
+                10px 15px;
+
+            border-radius:
+                8px;
+
+            font-size:
+                13px;
+        }
+
+
+        .community-grid {
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                20px;
+        }
+
+
+        .community-card {
+            background:
+                #fff3a6;
+
+            padding:
+                23px;
+
+            min-height:
+                210px;
+
+            box-shadow:
+                3px 6px 12px
+                rgba(0,0,0,.18);
+
+            transform:
+                rotate(-1deg);
+
+            position:
+                relative;
+
+            transition:
+                .2s;
+        }
+
+
+        .community-card:nth-child(2n) {
+            background:
+                #ffd6e7;
+
+            transform:
+                rotate(1deg);
+        }
+
+
+        .community-card:nth-child(3n) {
+            background:
+                #d8f3dc;
+
+            transform:
+                rotate(-.5deg);
+        }
+
+
+        .community-card:hover {
+            transform:
+                rotate(0deg)
+                translateY(-5px);
+
+            box-shadow:
+                4px 12px 18px
+                rgba(0,0,0,.22);
+        }
+
+
+        .tape {
+            position:
+                absolute;
+
+            top:
+                -8px;
+
+            left:
+                50%;
+
+            transform:
+                translateX(-50%)
+                rotate(-2deg);
+
+            width:
+                65px;
+
+            height:
+                22px;
+
+            background:
+                rgba(255,255,255,.55);
+        }
+
+
+        .community-card h3 {
+            font-family:
+                Georgia,
+                serif;
+
+            font-size:
+                19px;
+
+            margin:
+                8px 0 9px;
+        }
+
+
+        .community-card p {
+            font-size:
+                13px;
+
+            line-height:
+                1.5;
+
+            color:
+                #594d43;
+
+            margin-bottom:
+                12px;
+        }
+
+
+        .community-card .notice-image {
+            max-height:
+                150px;
+
+            object-fit:
+                cover;
+
+            margin-top:
+                10px;
+
+            margin-bottom:
+                12px;
+        }
+
+
+        .community-meta {
+            font-size:
+                11px;
+
+            color:
+                #796d61;
+
+            border-top:
+                1px dashed
+                rgba(0,0,0,.2);
+
+            padding-top:
+                9px;
+        }
+
+
+        /* =====================================================
+           DATES
+        ====================================================== */
+
+        .date-block {
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                3px;
+        }
+
+
+        .date-block strong {
+            color:
+                #493525;
+
+            font-size:
+                11px;
+        }
+
+
+        .date-block span {
+            color:
+                #8a7c6d;
+
+            font-size:
+                10px;
+        }
+
+
+        .community-date {
+            margin-top:
+                5px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                2px;
+        }
+
+
+        .community-date strong {
+            font-size:
+                10px;
+
+            color:
+                #594d43;
+        }
+
+
+        .community-date span {
+            font-size:
+                9px;
+
+            color:
+                #796d61;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+            background:
+                #172554;
+
+            color:
+                #cbd5e1;
+
+            text-align:
+                center;
+
+            padding:
+                25px;
+
+            font-size:
+                12px;
+        }
+
+
+        /* =====================================================
+           ADMIN LOGIN AT BOTTOM
+        ====================================================== */
+
+        .admin-access-bottom {
+            margin-top:
+                22px;
+
+            text-align:
+                center;
+        }
+
+
+        .admin-access-bottom a {
+            display:
+                inline-block;
+
+            padding:
+                8px 18px;
+
+            color:
+                #94a3b8;
+
+            background:
+                transparent;
+
+            border:
+                1px solid
+                rgba(148,163,184,0.35);
+
+            border-radius:
+                20px;
+
+            text-decoration:
+                none;
+
+            font-size:
+                12px;
+
+            font-weight:
+                600;
+
+            transition:
+                all .2s ease;
+        }
+
+
+        .admin-access-bottom a:hover {
+            color:
+                white;
+
+            border-color:
+                rgba(255,255,255,.6);
+
+            background:
+                rgba(255,255,255,.08);
+        }
+
+
+        /* =====================================================
+           TABLET
+        ====================================================== */
+
+        @media (max-width: 950px) {
+
+            .notice-grid,
+            .community-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .header {
+                padding:
+                    12px 20px;
+            }
+
+
+            .header-links > a {
+                padding:
+                    8px 8px;
+
+                font-size:
+                    11px;
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding:
+                    10px 14px;
+            }
+
+
+            .brand img {
+                width:
+                    40px;
+
+                height:
+                    40px;
+            }
+
+
+            .brand h1 {
+                font-size:
+                    16px;
+            }
+
+
+            .brand span {
+                font-size:
+                    9px;
+            }
+
+
+            .header-links > a {
+                display:
+                    none;
+            }
+
+
+            .header-links {
+                margin-left:
+                    auto;
+            }
+
+
+            .hero {
+                margin-top:
+                    25px;
+            }
+
+
+            .hero h2 {
+                font-size:
+                    29px;
+            }
+
+
+            .hero p {
+                font-size:
+                    13px;
+            }
+
+
+            .board {
+                margin-left:
+                    10px;
+
+                margin-right:
+                    10px;
+
+                padding:
+                    18px;
+
+                border-width:
+                    8px;
+            }
+
+
+            .notice-grid,
+            .community-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .board-title {
+                align-items:
+                    flex-start;
+
+                gap:
+                    10px;
+
+                flex-direction:
+                    column;
+            }
+
+
+            .community-header {
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+                gap:
+                    12px;
+            }
+
+
+            .notification-dropdown {
+                position:
+                    fixed;
+
+                top:
+                    62px;
+
+                right:
+                    10px;
+
+                left:
+                    10px;
+
+                width:
+                    auto;
+            }
+
+
+            .image-pin-photo {
+                max-height:
+                    400px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+====================================================== -->
+
+<header class="header">
+
+
+    <!-- BRAND -->
+
+    <a
+        href="{% url 'home' %}"
+        class="brand"
+    >
+
+        <img
+            src="{% static 'images/pusat-logo.png' %}"
+            alt="PUSAT Logo"
+        >
+
+        <div>
+
+            <h1>
+                PURWANCHAL UNIVERSITY 
+            </h1>
+
+            <span>
+                 SCHOOL OF SCIENCE AND TECHNOLOGY (PUSAT)
+            </span>
+
+        </div>
+
+    </a>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="header-links">
+
+
+        <a href="{% url 'home' %}">
+            🏠 Home
+        </a>
+
+
+        <a href="{% url 'notices' %}">
+            📢 Notices
+        </a>
+
+
+        <a href="{% url 'community' %}">
+            👥 Community
+        </a>
+
+
+        <!-- =================================================
+             NOTIFICATION BELL
+        ================================================== -->
+
+        <div class="notification-wrapper">
+
+
+            <button
+                type="button"
+                class="notification-bell-btn"
+                id="notificationBell"
+                aria-label="Notifications"
+                aria-expanded="false"
+                aria-controls="notificationDropdown"
+            >
+
+                🔔
+
+                {% if unread_notifications_count > 0 %}
+
+                    <span class="notification-badge">
+                        {{ unread_notifications_count }}
+                    </span>
+
+                {% endif %}
+
+            </button>
+
+
+            <!-- NOTIFICATION DROPDOWN -->
+
+            <div
+                class="notification-dropdown"
+                id="notificationDropdown"
+            >
+
+
+                <div class="notification-dropdown-header">
+
+                    <strong>
+                        Notifications
+                    </strong>
+
+
+                    {% if unread_notifications_count > 0 %}
+
+                        <form
+                            method="POST"
+                            action="{% url 'mark_all_notifications_read' %}"
+                        >
+
+                            {% csrf_token %}
+
+                            <button type="submit">
+                                Mark all read
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="notification-items">
+
+
+                    {% if notifications %}
+
+
+                        {% for notification in notifications %}
+
+
+                            <form
+                                method="POST"
+                                action="{% url 'mark_notification_read' notification.notification_id %}"
+                                class="notification-form"
+                            >
+
+                                {% csrf_token %}
+
+
+                                <button
+                                    type="submit"
+                                    class="notification-item {% if not notification.is_read %}notification-unread{% endif %}"
+                                >
+
+
+                                    <span
+                                        class="notification-item-icon"
+                                    >
+                                        📢
+                                    </span>
+
+
+                                    <span
+                                        class="notification-item-text"
+                                    >
+
+                                        <strong>
+                                            {{ notification.title }}
+                                        </strong>
+
+
+                                        {% if notification.message %}
+
+                                            <span>
+                                                {{ notification.message }}
+                                            </span>
+
+                                        {% endif %}
+
+
+                                        <small>
+                                            {{ notification.created_at|date:"d M Y, h:i A" }}
+                                        </small>
+
+                                    </span>
+
+
+                                    {% if not notification.is_read %}
+
+                                        <span
+                                            class="notification-unread-dot"
+                                        ></span>
+
+                                    {% endif %}
+
+
+                                </button>
+
+                            </form>
+
+
+                        {% endfor %}
+
+
+                    {% else %}
+
+
+                        <div class="notification-empty">
+
+                            <span>
+                                🔔
+                            </span>
+
+                            <strong>
+                                No notifications
+                            </strong>
+
+                            <small>
+                                New university notices will appear here.
+                            </small>
+
+                        </div>
+
+
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<section class="hero">
+
+    <h2>
+        📌  Notice Board
+    </h2>
+
+    <p>
+        Official announcements, examinations, events,
+        achievements and important information.
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     UNIVERSITY BOARD
+====================================================== -->
+
+<section class="board">
+
+
+    <div class="board-title">
+
+        <h2>
+            📢 Latest University Notices
+        </h2>
+
+        <a href="{% url 'notices' %}">
+            View All Notices →
+        </a>
+
+    </div>
+
+
+    <div class="notice-grid">
+
+
+        {% for notice in notices %}
+
+
+            <!-- =================================================
+                 IMAGE NOTICE
+                 ONLY IMAGE + DATE
+            ================================================== -->
+
+            {% if notice.post_type == "image" %}
+
+
+                <a
+                    href="{% url 'notice_detail' notice.notice_id %}"
+                    class="image-pin-link"
+                >
+
+                    <article class="image-pin-paper">
+
+
+                        <!-- PUSH PIN -->
+
+                        <div class="pin"></div>
+
+
+                        <!-- IMAGE -->
+
+                        {% if notice.public_image %}
+
+                            <img
+                                src="{{ notice.public_image }}"
+                                alt="University Notice"
+                                class="image-pin-photo"
+                                loading="lazy"
+                            >
+
+                        {% endif %}
+
+
+                        <!-- DATE -->
+
+                        <div class="image-pin-date">
+
+
+                            {% if notice.bs_date %}
+
+                                <strong>
+                                    {{ notice.bs_date.formatted }} BS
+                                </strong>
+
+                            {% endif %}
+
+
+                            {% if notice.posted_at %}
+
+                                <span>
+                                    {{ notice.posted_at|date:"F d, Y" }} AD
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </article>
+
+                </a>
+
+
+            <!-- =================================================
+                 NORMAL UNIVERSITY NOTICE
+            ================================================== -->
+
+            {% else %}
+
+
+                <article class="paper">
+
+
+                    <!-- PUSH PIN -->
+
+                    <div class="pin"></div>
+
+
+                    <!-- IMPORTANT -->
+
+                    {% if notice.priority == "important" %}
+
+                        <div class="important">
+                            IMPORTANT
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- CATEGORY -->
+
+                    {% if notice.public_category %}
+
+                        <div class="paper-category">
+                            {{ notice.public_category }}
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- IMAGE -->
+
+                    {% if notice.public_image %}
+
+                        <a
+                            href="{% url 'notice_detail' notice.notice_id %}"
+                        >
+
+                            <img
+                                src="{{ notice.public_image }}"
+                                alt="{{ notice.title }}"
+                                class="notice-image"
+                                loading="lazy"
+                            >
+
+                        </a>
+
+                    {% endif %}
+
+
+                    <!-- TITLE -->
+
+                    <h3>
+
+                        <a
+                            href="{% url 'notice_detail' notice.notice_id %}"
+                        >
+                            {{ notice.title }}
+                        </a>
+
+                    </h3>
+
+
+                    <!-- DESCRIPTION -->
+
+                    {% if notice.description %}
+
+                        <div class="paper-description">
+
+                            {{ notice.description|truncatechars:180 }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- FOOTER -->
+
+                    <div class="paper-footer">
+
+
+                        <div class="date-block">
+
+
+                            {% if notice.bs_date %}
+
+                                <strong>
+                                    {{ notice.bs_date.formatted }} BS
+                                </strong>
+
+                            {% endif %}
+
+
+                            {% if notice.posted_at %}
+
+                                <span>
+                                    {{ notice.posted_at|date:"F d, Y" }} AD
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                        <a
+                            href="{% url 'notice_detail' notice.notice_id %}"
+                            class="read-more"
+                        >
+                            Read →
+                        </a>
+
+
+                    </div>
+
+
+                </article>
+
+
+            {% endif %}
+
+
+        {% empty %}
+
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📌
+                </div>
+
+                <h3>
+                    No University Notices
+                </h3>
+
+                <p>
+                    New official notices will appear here.
+                </p>
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     COMMUNITY
+====================================================== -->
+
+<section class="community-section">
+
+
+    <div class="community-header">
+
+
+        <div>
+
+            <h2>
+                👥 Community Board
+            </h2>
+
+        </div>
+
+
+        <a href="{% url 'create_community_post' %}">
+            ✏️ Create Community Post
+        </a>
+
+
+    </div>
+
+
+    <div class="community-grid">
+
+
+        {% for post in community_posts %}
+
+
+            <article
+                class="community-card"
+                data-url="{% url 'community_detail' post.post_id %}"
+                onclick="window.location.href=this.dataset.url;"
+                style="cursor:pointer;"
+            >
+
+
+                <div class="tape"></div>
+
+
+                <!-- CATEGORY -->
+
+                {% if post.public_category %}
+
+                    <div class="paper-category">
+                        {{ post.public_category }}
+                    </div>
+
+                {% endif %}
+
+
+                <!-- TITLE -->
+
+                <h3>
+                    {{ post.title }}
+                </h3>
+
+
+                <!-- IMAGE -->
+
+                {% if post.public_image %}
+
+                    <img
+                        src="{{ post.public_image }}"
+                        alt="{{ post.title }}"
+                        class="notice-image"
+                        loading="lazy"
+                    >
+
+                {% endif %}
+
+
+                <!-- CONTENT -->
+
+                {% if post.content %}
+
+                    <p>
+                        {{ post.content|truncatechars:180 }}
+                    </p>
+
+                {% endif %}
+
+
+                <!-- DATE -->
+
+                {% if post.bs_date %}
+
+                    <div class="community-date">
+
+                        <strong>
+                            {{ post.bs_date.formatted }} BS
+                        </strong>
+
+                        <span>
+                            {{ post.posted_at|date:"M d, Y" }} AD
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- POSTED BY -->
+
+                {% if post.display_name %}
+
+                    <div class="community-meta">
+
+                        Posted by:
+                        {{ post.display_name }}
+
+                    </div>
+
+                {% endif %}
+
+
+            </article>
+
+
+        {% empty %}
+
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    👥
+                </div>
+
+                <h3>
+                    No Community Posts Yet
+                </h3>
+
+                <p>
+                    Be the first person to share something
+                    with the university community.
+                </p>
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <strong>
+        PUSAT Notice Board
+    </strong>
+
+    <br>
+    <br>
+
+    PUSAT,
+    Biratnagar, Nepal
+
+    <br>
+
+    A digital community notice board for students,
+    teachers and university members.
+
+
+    <!-- ADMIN ACCESS -->
+
+    <div class="admin-access-bottom">
+
+        <a href="{% url 'admin_login' %}">
+            🔐 Admin Login
+        </a>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     NOTIFICATION JAVASCRIPT
+====================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        const bell =
+            document.getElementById(
+                "notificationBell"
+            );
+
+
+        const dropdown =
+            document.getElementById(
+                "notificationDropdown"
+            );
+
+
+        const wrapper =
+            document.querySelector(
+                ".notification-wrapper"
+            );
+
+
+        if (
+            !bell ||
+            !dropdown ||
+            !wrapper
+        ) {
+            return;
+        }
+
+
+        /* =================================================
+           BELL CLICK
+        ================================================== */
+
+        bell.addEventListener(
+            "click",
+            function (event) {
+
+                event.stopPropagation();
+
+
+                const isOpen =
+                    dropdown.classList.contains(
+                        "notification-open"
+                    );
+
+
+                dropdown.classList.toggle(
+                    "notification-open"
+                );
+
+
+                bell.setAttribute(
+                    "aria-expanded",
+                    String(!isOpen)
+                );
+
+            }
+        );
+
+
+        /* =================================================
+           CLICK OUTSIDE
+        ================================================== */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    !wrapper.contains(
+                        event.target
+                    )
+                ) {
+
+                    dropdown.classList.remove(
+                        "notification-open"
+                    );
+
+
+                    bell.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           ESC KEY
+        ================================================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    dropdown.classList.remove(
+                        "notification-open"
+                    );
+
+
+                    bell.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                }
+
+            }
+        );
+
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>

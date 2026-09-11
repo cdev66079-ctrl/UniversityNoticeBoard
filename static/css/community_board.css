@@ -1,0 +1,1184 @@
+/* =========================================================
+   PUSAT COMMUNITY BOARD
+   COMPLETELY ISOLATED CSS
+========================================================= */
+
+.community-page,
+.community-page * {
+    box-sizing: border-box;
+}
+
+.community-page {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+
+    background: #8e572f !important;
+
+    color: #18283d;
+
+    font-family: "Poppins", sans-serif;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.community-page .cb-navbar {
+    width: 100% !important;
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 35px;
+
+    background: #142d50;
+
+    position: relative;
+    z-index: 100;
+}
+
+.community-page .cb-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    color: white;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.community-page .cb-brand img {
+    width: 40px;
+    height: 40px;
+
+    object-fit: contain;
+}
+
+.community-page .cb-nav-links {
+    display: flex;
+    align-items: center;
+
+    gap: 28px;
+}
+
+.community-page .cb-nav-links a {
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    padding: 8px 0;
+
+    white-space: nowrap;
+}
+
+.community-page .cb-nav-links a:hover {
+    opacity: .8;
+}
+
+.community-page .cb-nav-links .cb-active {
+    border-bottom: 2px solid white;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.community-page .cb-page {
+    width: 100% !important;
+    max-width: none !important;
+
+    margin: 0 !important;
+    padding: 0 0 50px !important;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.community-page .cb-header {
+    width: 100%;
+
+    min-height: 205px;
+
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 35px 20px;
+}
+
+.community-page .cb-title-paper {
+    width: min(680px, 90vw);
+
+    position: relative;
+
+    padding: 30px 30px 27px;
+
+    text-align: center;
+
+    background: #eee4cc;
+
+    transform: rotate(-1deg);
+
+    box-shadow:
+        0 10px 18px rgba(0,0,0,.3);
+}
+
+.community-page .cb-title-paper h1 {
+    margin: 0;
+
+    color: #142d50;
+
+    font-family: "Kalam", cursive;
+
+    font-size: clamp(36px, 6vw, 62px);
+
+    line-height: 1;
+}
+
+.community-page .cb-title-paper p {
+    margin: 9px 0 0;
+
+    font-family: "Kalam", cursive;
+
+    font-size: 20px;
+}
+
+.community-page .cb-small-line {
+    position: absolute;
+
+    font-family: "Kalam", cursive;
+
+    font-size: 34px;
+}
+
+.community-page .cb-line-left {
+    left: 20px;
+    top: 50%;
+}
+
+.community-page .cb-line-right {
+    right: 20px;
+    top: 50%;
+}
+
+.community-page .cb-header-message {
+    position: absolute;
+
+    right: 5%;
+
+    top: 40px;
+
+    width: 140px;
+
+    text-align: center;
+
+    font-family: "Kalam", cursive;
+
+    font-size: 22px;
+
+    line-height: 1.05;
+
+    transform: rotate(7deg);
+
+    color: #24170f;
+}
+
+
+/* =========================================================
+   HEADER PIN
+========================================================= */
+
+.community-page .cb-pin {
+    position: absolute;
+
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: -12px;
+
+    transform: translateX(-50%);
+
+    z-index: 10;
+}
+
+.community-page .cb-red {
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            #ff9999,
+            #d52e2e 45%,
+            #850d0d
+        );
+
+    box-shadow:
+        2px 5px 5px rgba(0,0,0,.4);
+}
+
+
+/* =========================================================
+   ACTION
+========================================================= */
+
+.community-page .cb-action {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    margin: 0 0 25px;
+}
+
+.community-page .cb-create {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 11px 20px;
+
+    background: #f3d96c;
+
+    color: #142d50;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    border-radius: 5px;
+
+    box-shadow:
+        0 5px 9px rgba(0,0,0,.28);
+
+    transform: rotate(-1deg);
+}
+
+.community-page .cb-create:hover {
+    transform:
+        rotate(0deg)
+        translateY(-2px);
+}
+
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.community-page .cb-messages {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-bottom: 20px;
+}
+
+.community-page .cb-message {
+    background: #d9efc8;
+
+    padding: 10px 20px;
+
+    border-radius: 5px;
+
+    box-shadow:
+        0 4px 8px rgba(0,0,0,.2);
+}
+
+
+/* =========================================================
+   CORK BOARD
+========================================================= */
+
+.community-page .cb-board {
+    width: calc(100% - 40px) !important;
+
+    max-width: 1450px !important;
+
+    margin: 0 auto !important;
+
+    min-height: 760px;
+
+    position: relative;
+
+    padding: 60px 45px 90px;
+
+    background-color: #a8683b;
+
+    background-image:
+        radial-gradient(
+            rgba(255,255,255,.08) 1px,
+            transparent 1px
+        );
+
+    background-size: 25px 25px;
+
+    border: 12px solid #6e401f;
+
+    border-radius: 8px;
+
+    box-shadow:
+        inset 0 0 35px rgba(50,20,5,.45),
+        0 15px 30px rgba(0,0,0,.35);
+
+    overflow: visible !important;
+}
+
+
+/* =========================================================
+   PAPERS
+========================================================= */
+
+.community-page .cb-papers {
+    width: 100% !important;
+
+    display: flex !important;
+
+    flex-wrap: wrap !important;
+
+    justify-content: center !important;
+
+    align-items: flex-start !important;
+
+    gap: 65px 45px !important;
+}
+
+
+/* =========================================================
+   PAPER
+========================================================= */
+
+.community-page .cb-paper {
+    width: 290px !important;
+
+    max-width: 290px !important;
+
+    min-width: 290px !important;
+
+    min-height: 270px;
+
+    position: relative;
+
+    flex: 0 1 290px !important;
+
+    padding: 35px 24px 25px;
+
+    box-shadow:
+        5px 9px 15px rgba(0,0,0,.3);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+    overflow: visible;
+
+    color: #17263b;
+}
+
+.community-page .cb-paper:hover {
+    transform:
+        rotate(0deg)
+        translateY(-8px)
+        scale(1.03);
+
+    box-shadow:
+        8px 16px 24px rgba(0,0,0,.35);
+
+    z-index: 20;
+}
+
+
+/* =========================================================
+   ROTATION
+========================================================= */
+
+.community-page .cb-paper-1 {
+    transform: rotate(-3deg);
+}
+
+.community-page .cb-paper-2 {
+    transform: rotate(2deg);
+}
+
+.community-page .cb-paper-3 {
+    transform: rotate(-1.5deg);
+}
+
+.community-page .cb-paper-4 {
+    transform: rotate(3deg);
+}
+
+.community-page .cb-paper-5 {
+    transform: rotate(-2.5deg);
+}
+
+.community-page .cb-paper-6 {
+    transform: rotate(1.5deg);
+}
+
+.community-page .cb-paper-7 {
+    transform: rotate(-3deg);
+}
+
+.community-page .cb-paper-8 {
+    transform: rotate(2.5deg);
+}
+
+
+/* =========================================================
+   COLOURS
+========================================================= */
+
+.community-page .sticky-yellow {
+    background: #f5df70;
+}
+
+.community-page .sticky-pink {
+    background: #f2a5c2;
+}
+
+.community-page .sticky-blue {
+    background: #8fc6ec;
+}
+
+.community-page .sticky-green {
+    background: #a9d78d;
+}
+
+.community-page .sticky-purple {
+    background: #c3a7e4;
+}
+
+.community-page .sticky-orange {
+    background: #f4b66c;
+}
+
+.community-page .paper-yellow {
+    background: #f5df70;
+}
+
+.community-page .paper-pink {
+    background: #f2a5c2;
+}
+
+.community-page .paper-blue {
+    background: #8fc6ec;
+}
+
+.community-page .paper-green {
+    background: #a9d78d;
+}
+
+.community-page .paper-purple {
+    background: #c3a7e4;
+}
+
+
+/* =========================================================
+   PAPER PIN
+========================================================= */
+
+.community-page .cb-paper-pin {
+    position: absolute;
+
+    width: 27px;
+    height: 27px;
+
+    top: -13px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 15;
+}
+
+.community-page .cb-pin-head {
+    width: 24px;
+    height: 24px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            #ffaaaa,
+            #dc3737 45%,
+            #8d1010
+        );
+
+    box-shadow:
+        2px 4px 5px rgba(0,0,0,.4);
+}
+
+
+/* =========================================================
+   TAPE
+========================================================= */
+
+.community-page .cb-tape {
+    position: absolute;
+
+    width: 72px;
+    height: 25px;
+
+    top: -5px;
+    right: 20px;
+
+    background: rgba(235,218,165,.8);
+
+    transform: rotate(7deg);
+}
+
+
+/* =========================================================
+   PAPER INNER
+========================================================= */
+
+.community-page .cb-paper-inner {
+    width: 100%;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.community-page .cb-category {
+    display: inline-block;
+
+    margin-bottom: 9px;
+
+    font-family: "Kalam", cursive;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    border-bottom: 2px solid currentColor;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.community-page .cb-title {
+    display: block;
+
+    color: #142d50;
+
+    font-family: "Kalam", cursive;
+
+    font-size: 26px;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    text-decoration: none;
+
+    overflow-wrap: anywhere;
+
+    margin-bottom: 12px;
+}
+
+.community-page .cb-title:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.community-page .cb-image {
+    width: 100%;
+
+    padding: 6px;
+
+    margin: 12px 0 15px;
+
+    background: #f7f0dc;
+
+    box-shadow:
+        2px 4px 7px rgba(0,0,0,.2);
+
+    transform: rotate(-1deg);
+}
+
+.community-page .cb-image img {
+    display: block;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    height: 175px;
+
+    object-fit: cover;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+.community-page .cb-text {
+    font-family: "Patrick Hand", "Kalam", cursive;
+
+    font-size: 19px;
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   AUTHOR
+========================================================= */
+
+.community-page .cb-author {
+    margin-top: 17px;
+
+    text-align: right;
+
+    font-family: "Kalam", cursive;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.community-page .cb-date {
+    display: flex;
+
+    flex-direction: column;
+
+    margin-top: 8px;
+
+    padding-top: 7px;
+
+    border-top: 1px dashed rgba(0,0,0,.35);
+
+    font-family: "Kalam", cursive;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   COMMENTS
+========================================================= */
+
+.community-page .cb-comments {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 12px;
+
+    padding: 5px 10px;
+
+    background: #f1e7ce;
+
+    font-family: "Kalam", cursive;
+
+    font-size: 14px;
+
+    box-shadow:
+        2px 3px 5px rgba(0,0,0,.18);
+
+    transform: rotate(-1deg);
+}
+
+
+/* =========================================================
+   OPEN
+========================================================= */
+
+.community-page .cb-open {
+    display: inline-block;
+
+    margin-top: 12px;
+
+    color: #142d50;
+
+    font-family: "Kalam", cursive;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.community-page .cb-open:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   LEAF
+========================================================= */
+
+.community-page .sticky-leaf {
+    min-height: 300px;
+
+    padding: 55px 32px 40px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #c5e5a5,
+            #82bd6f
+        );
+
+    border-radius:
+        70% 10% 70% 10%;
+
+    transform: rotate(-4deg);
+}
+
+.community-page .sticky-leaf::before {
+    content: "";
+
+    position: absolute;
+
+    width: 4px;
+
+    height: 75%;
+
+    left: 50%;
+    top: 12%;
+
+    background: rgba(45,95,40,.25);
+
+    transform: rotate(28deg);
+}
+
+
+/* =========================================================
+   SPEECH BUBBLE
+========================================================= */
+
+.community-page .sticky-speech {
+    min-height: 285px;
+
+    padding: 45px 30px;
+
+    border-radius: 40px;
+}
+
+.community-page .sticky-speech::after {
+    content: "";
+
+    position: absolute;
+
+    left: 42px;
+    bottom: -24px;
+
+    width: 50px;
+    height: 35px;
+
+    background: inherit;
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        0 100%
+    );
+}
+
+
+/* =========================================================
+   STAR
+========================================================= */
+
+.community-page .sticky-star {
+    min-height: 300px;
+
+    padding: 65px 38px 50px;
+
+    clip-path: polygon(
+        50% 0%,
+        61% 24%,
+        88% 18%,
+        70% 43%,
+        100% 60%,
+        68% 65%,
+        75% 100%,
+        50% 79%,
+        25% 100%,
+        32% 65%,
+        0% 60%,
+        30% 43%,
+        12% 18%,
+        39% 24%
+    );
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   HEART
+========================================================= */
+
+.community-page .sticky-heart {
+    min-height: 300px;
+
+    padding: 70px 38px 55px;
+
+    background: #f29fba;
+
+    border-radius:
+        50% 50% 48% 48%;
+
+    transform: rotate(-2deg);
+}
+
+
+/* =========================================================
+   TORN PAPER
+========================================================= */
+
+.community-page .sticky-torn {
+    background: #eee5d0;
+
+    position: relative;
+}
+
+.community-page .sticky-torn::before,
+.community-page .sticky-torn::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    height: 7px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 7px,
+            rgba(80,50,25,.2) 7px 12px
+        );
+}
+
+.community-page .sticky-torn::before {
+    top: 0;
+}
+
+.community-page .sticky-torn::after {
+    bottom: 0;
+}
+
+
+/* =========================================================
+   DOODLES
+========================================================= */
+
+.community-page .cb-doodle {
+    position: absolute;
+
+    color: rgba(30,15,5,.65);
+
+    font-family: "Kalam", cursive;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+.community-page .cb-doodle-1 {
+    right: 25px;
+    top: 20px;
+    font-size: 40px;
+}
+
+.community-page .cb-doodle-2 {
+    right: 30px;
+    bottom: 40px;
+    font-size: 35px;
+}
+
+.community-page .cb-doodle-3 {
+    left: 25px;
+    bottom: 25px;
+    font-size: 35px;
+}
+
+.community-page .cb-doodle-4 {
+    left: 15px;
+    top: 50%;
+    font-size: 40px;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.community-page .cb-empty {
+    width: 100%;
+
+    min-height: 500px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.community-page .cb-empty-paper {
+    width: 330px;
+
+    min-height: 260px;
+
+    position: relative;
+
+    padding: 55px 30px 35px;
+
+    text-align: center;
+
+    background: #f0e4c8;
+
+    transform: rotate(-3deg);
+
+    box-shadow:
+        5px 10px 18px rgba(0,0,0,.25);
+}
+
+.community-page .cb-empty-icon {
+    font-size: 45px;
+}
+
+.community-page .cb-empty-paper h2 {
+    font-family: "Kalam", cursive;
+}
+
+.community-page .cb-empty-paper p {
+    font-family: "Patrick Hand", cursive;
+
+    font-size: 18px;
+}
+
+.community-page .cb-empty-paper a {
+    display: inline-block;
+
+    padding: 9px 16px;
+
+    background: #f1d96c;
+
+    color: #142d50;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   BOTTOM NOTE
+========================================================= */
+
+.community-page .cb-bottom-note {
+    position: absolute;
+
+    left: 35px;
+    bottom: 22px;
+
+    font-family: "Kalam", cursive;
+
+    font-size: 24px;
+
+    transform: rotate(-4deg);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.community-page .cb-footer {
+    width: 100%;
+
+    padding: 25px;
+
+    text-align: center;
+
+    color: rgba(255,255,255,.85);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+    .community-page .cb-header-message {
+        display: none;
+    }
+
+    .community-page .cb-papers {
+        gap: 60px 30px !important;
+    }
+
+    .community-page .cb-paper {
+        width: 280px !important;
+        min-width: 280px !important;
+        max-width: 280px !important;
+        flex-basis: 280px !important;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .community-page .cb-navbar {
+        flex-direction: column;
+
+        gap: 10px;
+
+        padding: 12px;
+    }
+
+    .community-page .cb-nav-links {
+        width: 100%;
+
+        overflow-x: auto;
+
+        justify-content: flex-start;
+
+        gap: 20px;
+    }
+
+    .community-page .cb-header {
+        min-height: 170px;
+
+        padding: 25px 10px;
+    }
+
+    .community-page .cb-title-paper {
+        width: 94vw;
+
+        padding: 25px 15px;
+    }
+
+    .community-page .cb-title-paper h1 {
+        font-size: 37px;
+    }
+
+    .community-page .cb-title-paper p {
+        font-size: 17px;
+    }
+
+    .community-page .cb-small-line {
+        display: none;
+    }
+
+    .community-page .cb-board {
+        width: calc(100% - 16px) !important;
+
+        padding:
+            50px 15px 75px;
+
+        border-width: 8px;
+    }
+
+    .community-page .cb-papers {
+        display: flex !important;
+
+        flex-direction: column !important;
+
+        align-items: center !important;
+
+        gap: 60px !important;
+    }
+
+    .community-page .cb-paper {
+        width: min(290px, 90vw) !important;
+
+        min-width: min(290px, 90vw) !important;
+
+        max-width: min(290px, 90vw) !important;
+
+        flex-basis: auto !important;
+    }
+
+    .community-page .cb-doodle {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .community-page .cb-brand {
+        font-size: 15px;
+    }
+
+    .community-page .cb-title-paper h1 {
+        font-size: 31px;
+    }
+
+    .community-page .cb-paper {
+        width: 270px !important;
+
+        min-width: 270px !important;
+
+        max-width: 270px !important;
+    }
+
+}

@@ -1,0 +1,325 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ notice.title }} | PUSAT
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/notice_detail.css' %}?v=200"
+    >
+
+</head>
+
+
+<body>
+
+<div class="notice-board-page">
+
+    <div class="board-area">
+
+        <!-- BACK -->
+
+        <div class="detail-top">
+
+            <a
+                href="{% url 'notices' %}"
+                class="back-button"
+            >
+                ← Back to Notices
+            </a>
+
+        </div>
+
+
+        {% if image_pin %}
+
+            <!-- =================================================
+                 IMAGE ONLY NOTICE
+                 ================================================= -->
+
+            <div class="image-detail-paper">
+
+                <div class="paper-pin"></div>
+
+                <div class="image-only-container">
+
+                    {% if notice.public_image %}
+
+                        <img
+                            src="{{ notice.public_image }}"
+                            alt="University Notice"
+                            class="image-only-notice"
+                        >
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="image-only-date">
+
+                    {% if notice.bs_date %}
+
+                        <strong>
+                            {{ notice.bs_date.formatted }} BS
+                        </strong>
+
+                    {% endif %}
+
+                    {% if notice.posted_at %}
+
+                        <span>
+                            {{ notice.posted_at|date:"F d, Y" }} AD
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+        {% else %}
+
+            <!-- =================================================
+                 NORMAL UNIVERSITY NOTICE
+                 ================================================= -->
+
+            <article class="official-paper">
+
+                <!-- PIN -->
+
+                <div class="paper-pin"></div>
+
+
+                <!-- IMPORTANT -->
+
+                {% if notice.priority == "important" %}
+
+                    <div class="important-stamp">
+                        IMPORTANT
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     UNIVERSITY LETTERHEAD
+                     ================================================= -->
+
+                <header class="university-letterhead">
+
+                    <img
+                        src="{% static 'images/pusat-logo.png' %}"
+                        alt="Purbanchal University"
+                        class="university-logo"
+                    >
+
+                    <div class="university-heading">
+
+                        <div class="university-name">
+                            PURBANCHAL UNIVERSITY
+                        </div>
+
+                        <div class="university-name-secondary">
+                            SCHOOL OF SCIENCE AND TECHNOLOGY
+                        </div>
+
+                        <div class="university-location">
+                            Biratnagar, Nepal
+                        </div>
+
+                    </div>
+
+                </header>
+
+
+                <div class="official-divider"></div>
+
+
+                <!-- =================================================
+                     DATE
+                     ================================================= -->
+
+                <div class="notice-top-meta">
+
+                    <div class="notice-date">
+
+                        {% if notice.bs_date %}
+
+                            <strong>
+                                {{ notice.bs_date.formatted }} BS
+                            </strong>
+
+                        {% endif %}
+
+                        {% if notice.posted_at %}
+
+                            <span>
+                                {{ notice.posted_at|date:"F d, Y" }} AD
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    {% if notice.public_category %}
+
+                        <div class="notice-category">
+                            {{ notice.public_category }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =================================================
+                     TITLE
+                     ================================================= -->
+
+                <h1 class="notice-title">
+                    {{ notice.title }}
+                </h1>
+
+
+                <!-- =================================================
+                     IMAGE
+                     ================================================= -->
+
+                {% if images %}
+
+                    <div class="notice-images">
+
+                        {% for image in images %}
+
+                            <div class="notice-image-frame">
+
+                                <img
+                                    src="{{ image.image_path }}"
+                                    alt="{{ notice.title }}"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     CONTENT
+                     ================================================= -->
+
+                {% if notice.description %}
+
+                    <div class="notice-content">
+
+                        {{ notice.description|linebreaks }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     ATTACHMENT
+                     ================================================= -->
+
+                {% if notice.attachment_type == "pdf" and notice.attachment %}
+
+                    <div class="document-section">
+
+                        <div class="document-icon">
+                            PDF
+                        </div>
+
+                        <div class="document-details">
+
+                            <strong>
+                                Official Document
+                            </strong>
+
+                            <span>
+                                Attached PDF document
+                            </span>
+
+                        </div>
+
+                        <a
+                            href="{{ notice.attachment }}"
+                            target="_blank"
+                            rel="noopener"
+                            class="document-button"
+                        >
+                            Open PDF →
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     FOOTER
+                     ================================================= -->
+
+                <footer class="paper-footer">
+
+                    <div class="footer-university">
+
+                        <img
+                            src="{% static 'images/pusat-logo.png' %}"
+                            alt="PUSAT"
+                            class="footer-logo"
+                        >
+
+                        <div>
+
+                            <strong>
+                                Purbanchal University
+                            </strong>
+
+                            <span>
+                                School of Science and Technology
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="paper-reference">
+                        Official University Notice
+                    </div>
+
+                </footer>
+
+            </article>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

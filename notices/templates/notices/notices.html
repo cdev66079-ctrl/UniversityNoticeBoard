@@ -1,0 +1,477 @@
+{% extends "notices/base.html" %}
+{% load static %}
+{% load nepali_date %}
+
+{% block title %}
+University Notices | PUSAT Notice Board
+{% endblock %}
+
+
+{% block content %}
+
+<div class="notice-board-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
+
+    <section class="board-header">
+
+        <div class="board-brand">
+
+            <div class="board-logo-wrap">
+
+                <img
+                    src="{% static 'images/pusat-logo.png' %}"
+                    alt="PUSAT Logo"
+                    class="board-logo"
+                >
+
+            </div>
+
+            <div class="board-title">
+
+                <div class="board-kicker">
+                    PURBANCHAL UNIVERSITY of science and technology
+                </div>
+
+                <h1>
+                    PUSAT
+                </h1>
+
+                <div class="board-subtitle">
+                    OFFICIAL NOTICE BOARD
+                </div>
+
+                <div class="board-location">
+                    Biratnagar, Nepal
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             BOARD ACTIONS
+             ================================================= -->
+
+        <div class="board-actions">
+
+            <a
+                href="{% url 'home' %}"
+                class="board-link"
+            >
+                Notice Board
+            </a>
+
+            <a
+                href="{% url 'community' %}"
+                class="board-link"
+            >
+                Community
+            </a>
+
+           
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PHYSICAL NOTICE BOARD
+         ===================================================== -->
+
+    <section class="physical-board">
+
+
+        <!-- =================================================
+             BLACK BOARD PLAQUE
+             ================================================= -->
+
+        <div class="board-top-label">
+
+            <span class="board-pin"></span>
+
+            <span>
+                OFFICIAL UNIVERSITY NOTICES
+            </span>
+
+            <span class="board-pin"></span>
+
+        </div>
+
+
+<form method="GET" action="{% url 'notices' %}" class="notice-search-form">
+
+    <input
+        type="search"
+        name="q"
+        value="{{ search_query }}"
+        placeholder="🔎 Search notices..."
+        class="notice-search-input"
+    >
+
+    <button type="submit" class="notice-search-button">
+        Search
+    </button>
+
+    {% if search_query %}
+        <a href="{% url 'notices' %}" class="notice-search-clear">
+            Clear
+        </a>
+    {% endif %}
+
+</form>
+        <!-- =================================================
+             NOTICE AREA
+             ================================================= -->
+
+        <div class="paper-area">
+
+
+            <!-- =================================================
+                 PAPER AREA HEADER
+                 ================================================= -->
+
+            <div class="paper-area-heading">
+
+                <div>
+
+                    <span class="small-board-label">
+                        PURBANCHAL UNIVERSITY
+                    </span>
+
+                    <h2>
+                        All University Notices
+                    </h2>
+
+                </div>
+
+
+                <div class="notice-count-label">
+
+                    {{ notices|length }} notices
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PINNED NOTICE PAPERS
+                 ================================================= -->
+
+            <div class="pinned-notices">
+
+
+                {% for notice in notices %}
+
+
+                <article
+                    class="pinned-notice
+                    {% cycle 'paper-tilt-left' 'paper-straight' 'paper-tilt-right' 'paper-tilt-small-left' %}"
+                >
+
+
+                    <!-- =================================================
+                         PUSH PIN
+                         ================================================= -->
+
+                    <div class="push-pin">
+                        <span></span>
+                    </div>
+
+
+
+                    <!-- =================================================
+                         PAPER TAPE
+                         ================================================= -->
+
+                    <div class="paper-tape"></div>
+
+
+
+                    <!-- =================================================
+                         IMPORTANT STAMP
+                         ================================================= -->
+
+                    {% if notice.priority == "important" %}
+
+                        <div class="important-stamp">
+                            IMPORTANT
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- =================================================
+                         NOTICE DATE
+                         ================================================= -->
+
+                    <div class="notice-paper-date">
+
+                        {% if notice.posted_at %}
+
+                            <!-- NEPALI BS -->
+
+                            <div class="paper-bs-date">
+                                {{ notice.posted_at|bs_date }}
+                            </div>
+
+
+                            <!-- ENGLISH / AD -->
+
+                            <div class="paper-ad-date">
+                                {{ notice.posted_at|date:"M d, Y" }}
+                            </div>
+
+                        {% else %}
+
+                            <div class="paper-bs-date">
+                                --
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         PAPER CONTENT
+                         ================================================= -->
+
+                    <div class="paper-content">
+
+
+                        <!-- =================================================
+                             CATEGORY
+                             ================================================= -->
+
+                        <div class="paper-category">
+
+                            {% for category in categories %}
+
+                                {% if category.category_id == notice.category_id %}
+
+                                    {{ category.category_name }}
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             TITLE
+                             ================================================= -->
+
+                        <h3>
+
+                            <a
+                                href="{% url 'notice_detail' notice.notice_id %}"
+                            >
+                                {{ notice.title }}
+                            </a>
+
+                        </h3>
+
+
+
+                        <!-- =================================================
+                             IMAGE PREVIEW
+                             ================================================= -->
+
+                        {% if notice.images %}
+
+                            {% with image=notice.images.0 %}
+
+                                <div class="notice-paper-image">
+
+                                    <img
+                                        src="{{ image.image_path }}"
+                                        alt="{{ notice.title }}"
+                                        loading="lazy"
+                                    >
+
+
+                                    {% if notice.images|length > 1 %}
+
+                                        <span class="image-count">
+
+                                            +{{ notice.images|length|add:"-1" }} more
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            {% endwith %}
+
+                        {% endif %}
+
+
+
+                        <!-- =================================================
+                             DESCRIPTION
+                             ================================================= -->
+
+                        {% if notice.description %}
+
+                            <p>
+                                {{ notice.description|truncatewords:22 }}
+                            </p>
+
+                        {% else %}
+
+                            <p>
+                                Official university announcement.
+                            </p>
+
+                        {% endif %}
+
+
+
+                        <!-- =================================================
+                             PAPER FOOTER
+                             ================================================= -->
+
+                        <div class="paper-footer">
+
+                            <span>
+                                Published
+                            </span>
+
+
+                            {% if notice.posted_at %}
+
+                                <span class="paper-date-bs">
+
+                                    {{ notice.posted_at|bs_datetime }}
+
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if notice.audience %}
+
+                                <span class="paper-dot">
+                                    •
+                                </span>
+
+                                <span>
+                                    {{ notice.audience }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             ATTACHMENT
+                             ================================================= -->
+<!-- =========================================
+     NOTICE ATTACHMENT
+     ========================================= -->
+
+{% if notice.attachment_type == "pdf" and notice.attachment %}
+
+    <div class="notice-pdf-preview">
+
+        <div class="pdf-label">
+            📄 Official PDF Document
+        </div>
+
+        <iframe
+            src="{{ notice.attachment }}"
+            title="{{ notice.title }} PDF"
+            loading="lazy">
+        </iframe>
+
+        <a
+            href="{{ notice.attachment }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="pdf-open-button">
+            📄 Open Full PDF
+        </a>
+
+    </div>
+
+{% endif %}
+
+
+
+                        <!-- =================================================
+                             READ FULL NOTICE
+                             ================================================= -->
+
+                        <a
+                            href="{% url 'notice_detail' notice.notice_id %}"
+                            class="read-paper"
+                        >
+                            Read full notice →
+                        </a>
+
+
+                    </div>
+
+                </article>
+
+
+                {% empty %}
+
+
+                <!-- =================================================
+                     EMPTY BOARD
+                     ================================================= -->
+
+                <div class="empty-board-paper">
+
+                    <div class="push-pin">
+                        <span></span>
+                    </div>
+
+
+                    <div class="empty-icon">
+                        📌
+                    </div>
+
+
+                    <h3>
+                        No University Notices Yet
+                    </h3>
+
+
+                    <p>
+                        Official announcements will appear here
+                        when they are published.
+                    </p>
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+</div>
+
+{% endblock %}

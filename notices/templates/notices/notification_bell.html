@@ -1,0 +1,155 @@
+<div class="notification-wrapper">
+
+    <button
+        type="button"
+        class="notification-bell-btn"
+        id="notificationBell"
+        aria-label="Notifications"
+    >
+        🔔
+
+        {% if unread_notifications_count > 0 %}
+            <span class="notification-badge">
+                {{ unread_notifications_count }}
+            </span>
+        {% endif %}
+    </button>
+
+
+    <div
+        class="notification-dropdown"
+        id="notificationDropdown"
+    >
+
+        <div class="notification-dropdown-header">
+
+            <strong>Notifications</strong>
+
+            {% if unread_notifications_count > 0 %}
+
+                <form
+                    method="POST"
+                    action="{% url 'mark_all_notifications_read' %}"
+                >
+                    {% csrf_token %}
+
+                    <button type="submit">
+                        Mark all read
+                    </button>
+                </form>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="notification-items">
+
+            {% if notifications %}
+
+                {% for notification in notifications %}
+
+                    <form
+                        method="POST"
+                        action="{% url 'mark_notification_read' notification.notification_id %}"
+                        class="notification-form"
+                    >
+
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="notification-item {% if not notification.is_read %}notification-unread{% endif %}"
+                        >
+
+                            <span class="notification-item-icon">
+                                📢
+                            </span>
+
+                            <span class="notification-item-text">
+
+                                <strong>
+                                    {{ notification.title }}
+                                </strong>
+
+                                {% if notification.message %}
+                                    <span>
+                                        {{ notification.message }}
+                                    </span>
+                                {% endif %}
+
+                                <small>
+                                    {{ notification.created_at|date:"M d, Y · h:i A" }}
+                                </small>
+
+                            </span>
+
+                            {% if not notification.is_read %}
+                                <span class="notification-unread-dot"></span>
+                            {% endif %}
+
+                        </button>
+
+                    </form>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="notification-empty">
+
+                    <span>🔔</span>
+
+                    <strong>No notifications</strong>
+
+                    <small>
+                        New university notices will appear here.
+                    </small>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const bell = document.getElementById("notificationBell");
+    const dropdown = document.getElementById("notificationDropdown");
+    const wrapper = document.querySelector(".notification-wrapper");
+
+    if (!bell || !dropdown || !wrapper) {
+        return;
+    }
+
+    bell.addEventListener("click", function (event) {
+
+        event.stopPropagation();
+
+        dropdown.classList.toggle("notification-open");
+
+    });
+
+
+    document.addEventListener("click", function (event) {
+
+        if (!wrapper.contains(event.target)) {
+
+            dropdown.classList.remove(
+                "notification-open"
+            );
+
+        }
+
+    });
+
+});
+
+</script>

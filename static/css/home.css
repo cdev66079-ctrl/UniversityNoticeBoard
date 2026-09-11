@@ -1,0 +1,42 @@
+/* =========================================
+   ADMIN LOGIN - BOTTOM OF HOME PAGE
+========================================= */
+
+.admin-access-bottom {
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: 30px;
+    padding: 20px;
+    position: relative;
+    z-index: 999;
+}
+
+.admin-access-bottom a {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 20px;
+
+    text-decoration: none !important;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #555 !important;
+    background: #f5f5f5;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    transition: 0.2s ease;
+}
+
+.admin-access-bottom a:hover {
+    color: #111 !important;
+    background: #eaeaea;
+    transform: translateY(-2px);
+}

@@ -1,0 +1,49 @@
+import customtkinter as ctk
+
+ source /home/eva/UniversityNoticeBoard/venv/bin/activate
+from student.notice_board import NoticeBoard
+from admin.admin_dashboard import AdminDashboard
+
+
+class UniversityNoticeBoardApp(ctk.CTk):
+
+    def __init__(self):
+        super().__init__()
+
+        self.title("University Notice Board")
+        self.geometry("1200x750")
+        self.minsize(1000, 650)
+
+        ctk.set_appearance_mode("light")
+        ctk.set_default_color_theme("blue")
+
+        self.show_notice_board()
+
+    def clear_screen(self):
+        for widget in self.winfo_children():
+            widget.destroy()
+
+    def show_notice_board(self):
+        self.clear_screen()
+
+        board = NoticeBoard(
+            self,
+            open_admin=self.show_admin
+        )
+
+        board.pack(fill="both", expand=True)
+
+    def show_admin(self):
+        self.clear_screen()
+
+        admin = AdminDashboard(
+            self,
+            back_to_board=self.show_notice_board
+        )
+
+        admin.pack(fill="both", expand=True)
+
+
+if __name__ == "__main__":
+    app = UniversityNoticeBoardApp()
+    app.mainloop()

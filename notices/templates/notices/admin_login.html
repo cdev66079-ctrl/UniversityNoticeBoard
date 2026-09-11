@@ -1,0 +1,396 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Login | PUSAT Notice Board</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #111827,
+                    #1e3a8a
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 420px;
+        }
+
+
+        .login-card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 38px;
+
+            box-shadow:
+                0 25px 60px
+                rgba(0,0,0,0.25);
+        }
+
+
+        .logo {
+
+            text-align: center;
+
+            margin-bottom: 20px;
+        }
+
+
+        .logo img {
+
+            width: 75px;
+
+            height: 75px;
+
+            object-fit: contain;
+
+            border-radius: 14px;
+
+            padding: 5px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e5e7eb;
+        }
+
+
+        .title {
+
+            text-align: center;
+
+            margin-bottom: 28px;
+        }
+
+
+        .title h1 {
+
+            font-size: 25px;
+
+            color: #111827;
+
+            margin-bottom: 7px;
+        }
+
+
+        .title p {
+
+            font-size: 13px;
+
+            color: #6b7280;
+        }
+
+
+        .form-group {
+
+            margin-bottom: 18px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #374151;
+
+            margin-bottom: 7px;
+        }
+
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+
+        .form-group input:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37,99,235,0.12);
+        }
+
+
+        .login-btn {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 13px;
+
+            border-radius: 9px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            transition: 0.2s;
+        }
+
+
+        .login-btn:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        .error {
+
+            background: #fef2f2;
+
+            border: 1px solid #fecaca;
+
+            color: #b91c1c;
+
+            padding: 12px 14px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #e5e7eb;
+
+            font-size: 12px;
+
+            color: #9ca3af;
+        }
+
+
+        .back-link {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+
+        .back-link:hover {
+
+            text-decoration: underline;
+        }
+
+
+        @media (max-width: 500px) {
+
+            .login-card {
+
+                padding: 28px 22px;
+            }
+
+            .title h1 {
+
+                font-size: 22px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-container">
+
+    <div class="login-card">
+
+
+        <div class="logo">
+
+            <img
+                src="{% static 'images/pusat-logo.png' %}"
+                alt="PUSAT Logo"
+            >
+
+        </div>
+
+
+        <div class="title">
+
+            <h1>Admin Login</h1>
+
+            <p>
+                PUSAT Notice Board Administration
+            </p>
+
+        </div>
+
+
+        {% if error %}
+
+            <div class="error">
+
+                {{ error }}
+
+            </div>
+
+        {% endif %}
+
+
+        <form
+            method="POST"
+            action="{% url 'admin_login' %}"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Admin Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter admin email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter admin password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                🔐 Login to Admin Panel
+            </button>
+
+        </form>
+
+
+        <a
+            href="{% url 'home' %}"
+            class="back-link"
+        >
+            ← Back to Notice Board
+        </a>
+
+
+        <div class="footer">
+
+            PUSAT Notice Board<br>
+
+            Purbanchal University, Biratnagar
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

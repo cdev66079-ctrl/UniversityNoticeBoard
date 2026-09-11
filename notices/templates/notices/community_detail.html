@@ -1,0 +1,175 @@
+{% extends "notices/base.html" %}
+
+{% load static %}
+
+{% block title %}
+    {{ post.title|default:"Community Post" }} | PUSAT Community
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/community_detail.css' %}?v=60">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="community-detail-page">
+
+    <!-- =====================================================
+         SIMPLE TOP BAR
+         ===================================================== -->
+
+    <div class="community-detail-topbar">
+
+        <a href="{% url 'community' %}" class="community-back">
+            <span>←</span>
+            <span>Back to Community</span>
+        </a>
+
+        <div class="community-brand-mini">
+
+            <img
+                src="{% static 'images/pusat-logo.png' %}"
+                alt="PUSAT"
+            >
+
+            <span>PUSAT COMMUNITY</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         DECORATIONS
+         ===================================================== -->
+
+    <div class="floating-doodles">
+
+        <span class="doodle star-one">★</span>
+        <span class="doodle star-two">✦</span>
+        <span class="doodle star-three">✧</span>
+
+        <span class="doodle moon">☾</span>
+
+        <span class="doodle dollar">$</span>
+
+        <span class="doodle heart">♥</span>
+
+        <span class="doodle sparkle">✺</span>
+
+        <span class="doodle sun">☼</span>
+
+        <span class="doodle flower">✿</span>
+
+        <span class="doodle zigzag">〰</span>
+
+        <span class="doodle dot-one">•</span>
+        <span class="doodle dot-two">•</span>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN PAPER
+         ===================================================== -->
+
+    <main class="community-detail-board">
+
+        <article
+            class="
+                community-detail-paper
+                {{ post.paper_style|default:'sticky-yellow' }}
+            "
+        >
+
+            <!-- PUSH PIN -->
+
+            <div class="detail-push-pin"></div>
+
+
+            <!-- SMALL DECORATION ON PAPER -->
+
+            <div class="paper-mini-star">
+                ✦
+            </div>
+
+
+            <!-- =================================================
+                 TITLE
+                 ================================================= -->
+
+            {% if post.title %}
+
+                <h1 class="community-detail-title">
+                    {{ post.title }}
+                </h1>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 TEXT CONTENT
+                 ================================================= -->
+
+            {% if post.content %}
+
+                <div class="community-detail-content">
+                    {{ post.content|linebreaksbr }}
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 IMAGE
+                 Works for:
+                 TEXT + IMAGE
+                 IMAGE ONLY
+                 ================================================= -->
+
+            {% if post.attachment_type == "image" and post.attachment %}
+
+                <div class="community-detail-image-container">
+
+                    <img
+                        src="{{ post.attachment }}"
+                        alt="{{ post.title|default:'Community image' }}"
+                        class="community-detail-image"
+                    >
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 WRITER
+                 ================================================= -->
+
+            <div class="community-detail-writer">
+
+                <span class="writer-line">
+                    —
+                </span>
+
+                <span>
+                    {{ post.display_name|default:"Anonymous" }}
+                </span>
+
+            </div>
+
+
+            <!-- LITTLE DOODLE INSIDE PAPER -->
+
+            <div class="paper-bottom-doodle">
+                ✧
+            </div>
+
+        </article>
+
+    </main>
+
+</div>
+
+{% endblock %}

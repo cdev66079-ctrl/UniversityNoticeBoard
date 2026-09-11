@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | PUSAT Notice Board</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #18212b;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 10px;
+            margin-bottom: 30px;
+        }
+
+        .brand span {
+            color: #f5c542;
+        }
+
+        .admin-info {
+            background: #222e3a;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .admin-info small {
+            color: #9fa9b3;
+        }
+
+        .admin-info strong {
+            display: block;
+            margin-top: 5px;
+        }
+
+        .nav-title {
+            color: #7f8b96;
+            font-size: 12px;
+            margin: 20px 10px 8px;
+            text-transform: uppercase;
+        }
+
+        .nav a {
+            display: block;
+            color: #dce3e8;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        .nav a:hover {
+            background: #293744;
+        }
+
+        .logout {
+            color: #ff8f8f !important;
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 250px;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 30px;
+        }
+
+        .topbar p {
+            color: #6d7780;
+            margin-top: 5px;
+        }
+
+        /* STAT CARDS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .stat-card .label {
+            color: #737d86;
+            font-size: 14px;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .stat-card .sub {
+            color: #20a36a;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        /* QUICK ACTIONS */
+
+        .section-title {
+            font-size: 21px;
+            margin-bottom: 15px;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .action {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            color: #222;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+
+        .action:hover {
+            transform: translateY(-3px);
+        }
+
+        .action-icon {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .action strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .action span {
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* CONTENT GRID */
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .panel-header a {
+            text-decoration: none;
+            color: #2878d0;
+            font-size: 13px;
+        }
+
+        .item {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .item-meta {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            background: #e8f3ff;
+            color: #2878d0;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+/* =========================
+   DASHBOARD NOTICE ITEMS
+========================= */
+
+.notice-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-notice {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 13px 0;
+
+    text-decoration: none;
+    color: inherit;
+
+    border-bottom: 1px solid #eeeeee;
+
+    transition: 0.2s ease;
+}
+
+.dashboard-notice:last-child {
+    border-bottom: none;
+}
+
+.dashboard-notice:hover {
+    transform: translateX(4px);
+}
+
+
+/* IMAGE */
+
+.notice-image {
+    width: 64px;
+    height: 64px;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    background: #f0f3f6;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notice-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.notice-image-placeholder {
+    font-size: 27px;
+}
+
+
+/* CONTENT */
+
+.notice-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notice-title {
+    font-weight: bold;
+
+    font-size: 15px;
+
+    margin-bottom: 7px;
+
+    color: #222;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.notice-meta {
+    display: flex;
+
+    gap: 14px;
+
+    color: #888;
+
+    font-size: 12px;
+}
+
+.notice-meta span {
+    white-space: nowrap;
+}
+
+
+/* STATUS */
+
+.notice-status {
+    flex-shrink: 0;
+}
+
+.status-active {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background: #e8f8ef;
+
+    color: #20a36a;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.status-inactive {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background: #eeeeee;
+
+    color: #777;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+        /* RESPONSIVE */
+
+        @media (max-width: 1100px) {
+
+            .stats,
+            .actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+.dashboard-notice {
+    gap: 10px;
+}
+
+.notice-image {
+    width: 52px;
+    height: 52px;
+}
+
+.notice-meta {
+    flex-direction: column;
+    gap: 3px;
+}
+
+.notice-status {
+    display: none;
+}
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .stats,
+            .actions,
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+        PUSAT <span>ADMIN</span>
+    </div>
+
+    <div class="admin-info">
+        <small>Logged in as</small>
+        <strong>{{ admin_name }}</strong>
+    </div>
+
+    <div class="nav-title">CONTROL CENTER</div>
+
+    <nav class="nav">
+
+        <a href="{% url 'admin_dashboard' %}">
+            📊 Dashboard
+        </a>
+
+        <a href="{% url 'admin_notices' %}">
+            📢 University Notices
+        </a>
+
+        <a href="{% url 'admin_community' %}">
+            👥 Community
+        </a>
+
+        <a href="{% url 'admin_comments' %}">
+            💬 Comments
+        </a>
+
+        <a href="{% url 'admin_categories' %}">
+            🏷 Categories
+        </a>
+
+    </nav>
+
+    <div class="nav-title">WEBSITE</div>
+
+    <nav class="nav">
+
+        <a href="{% url 'home' %}" target="_blank">
+            🌐 Open Website
+        </a>
+
+        <a href="{% url 'admin_logout' %}" class="logout">
+            🚪 Logout
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- MAIN CONTENT -->
+
+<main class="main">
+
+    <div class="topbar">
+
+        <div>
+            <h1>Dashboard</h1>
+            <p>Welcome back, {{ admin_name }}. Here's what's happening.</p>
+        </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <div class="label">University Notices</div>
+            <div class="number">{{ total_notices }}</div>
+            <div class="sub">
+                {{ active_notices }} active
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="label">Community Posts</div>
+            <div class="number">{{ total_community_posts }}</div>
+            <div class="sub">
+                {{ active_community_posts }} active
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="label">Comments</div>
+            <div class="number">{{ total_comments }}</div>
+            <div class="sub">
+                Community discussions
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="label">Categories</div>
+            <div class="number">{{ total_categories }}</div>
+            <div class="sub">
+                Notice categories
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <h2 class="section-title">Quick Actions</h2>
+
+    <div class="actions">
+
+        <a href="{% url 'admin_create_notice' %}" class="action">
+
+            <div class="action-icon">📢</div>
+
+            <strong>Create Notice</strong>
+
+            <span>Publish a university notice</span>
+
+        </a>
+
+
+
+
+        <a href="{% url 'admin_community' %}" class="action">
+
+            <div class="action-icon">👥</div>
+
+            <strong>Manage Community</strong>
+
+            <span>Review community posts</span>
+
+        </a>
+
+
+        <a href="{% url 'admin_comments' %}" class="action">
+
+            <div class="action-icon">💬</div>
+
+            <strong>Manage Comments</strong>
+
+            <span>Review discussions</span>
+
+        </a>
+
+    </div>
+
+
+    <!-- RECENT CONTENT -->
+
+    <div class="content-grid">
+
+
+        <!-- RECENT NOTICES -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <h2>Recent Notices</h2>
+
+                <a href="{% url 'admin_notices' %}">
+                    View all →
+                </a>
+
+            </div>
+
+
+            {% for notice in recent_notices %}
+
+                <div class="item">
+
+                    <div class="item-title">
+                        {{ notice.title }}
+                    </div>
+
+                    <div class="item-meta">
+                        {{ notice.posted_at|date:"M d, Y" }}
+                    </div>
+
+                    {% if notice.priority == "important" %}
+                        <span class="badge">
+                            ⭐ Important
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            {% empty %}
+
+                <div class="item">
+                    No notices yet.
+                </div>
+
+            {% endfor %}
+
+        </section>
+
+
+        <!-- RECENT COMMUNITY -->
+
+        <section class="panel">
+
+    <div class="panel-header">
+        <h2>Recent Notices</h2>
+
+        <a href="{% url 'admin_notices' %}">
+            View all →
+        </a>
+    </div>
+
+    <div class="notice-list">
+
+        {% for notice in recent_notices %}
+
+        <a
+            href="{% url 'notice_detail' notice.notice_id %}"
+            class="dashboard-notice"
+        >
+
+            <!-- NOTICE IMAGE -->
+            <div class="notice-image">
+
+                {% if notice.dashboard_image %}
+
+                    <img
+                        src="{{ notice.dashboard_image }}"
+                        alt="{{ notice.title }}"
+                    >
+
+                {% else %}
+
+                    <div class="notice-image-placeholder">
+                        📄
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- NOTICE INFORMATION -->
+            <div class="notice-content">
+
+                <div class="notice-title">
+                    {{ notice.title }}
+                </div>
+
+                <div class="notice-meta">
+
+                    <span>
+                        📢 {{ notice.dashboard_category }}
+                    </span>
+
+                    <span>
+                        📅 {{ notice.posted_at|date:"M d, Y" }}
+                    </span>
+
+                </div>
+
+                {% if notice.priority == "important" %}
+
+                    <span class="badge">
+                        ⭐ Important
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- STATUS -->
+            <div class="notice-status">
+
+                {% if notice.status == "active" %}
+
+                    <span class="status-active">
+                        Active
+                    </span>
+
+                {% else %}
+
+                    <span class="status-inactive">
+                        {{ notice.status|title }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+            <div class="item">
+                No notices yet.
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+    </div>
+
+</main>
+
+</body>
+</html>
