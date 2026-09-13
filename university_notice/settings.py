@@ -29,7 +29,8 @@ DEBUG = os.getenv(
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "192.168.3.27"
+    "192.168.3.27",
+    "pusatnoticeboard.onrender.com",
 ]
 
 
