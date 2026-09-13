@@ -86,26 +86,17 @@ ROOT_URLCONF = 'university_notice.urls'
 # ==========================================================
 
 TEMPLATES = [
-
     {
-        'BACKEND':
-            'django.template.backends.django.DjangoTemplates',
-
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR / 'templates',
         ],
-
         'APP_DIRS': True,
-
         'OPTIONS': {
-
             'context_processors': [
-
                 'django.template.context_processors.request',
-
                 'django.contrib.auth.context_processors.auth',
-                "notices.context_processors.notifications",
-
+                'notices.context_processors.notifications',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -148,9 +139,11 @@ DATABASES = {
         ),
         "OPTIONS": {
             "charset": "utf8mb4",
+            "ssl": True,
         },
     }
 }
+
 if not os.getenv("DB_PASSWORD"):
     raise ValueError("DB_PASSWORD is not configured.")
 
