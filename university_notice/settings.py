@@ -31,8 +31,8 @@ ALLOWED_HOSTS = [
     "localhost",
     "192.168.3.27",
     "pusatnoticeboard.onrender.com",
+    ".onrender.com",
 ]
-
 
 # ==========================================================
 # APPLICATIONS
