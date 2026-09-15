@@ -257,6 +257,7 @@ urlpatterns = [
     ),
     path("db-test/", views.db_test, name="db_test"),
     path("network-test/", views.network_test, name="network_test"),
+    path("django-test/", views.django_test, name="django_test"),
 ]
 
 

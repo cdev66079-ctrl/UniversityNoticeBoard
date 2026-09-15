@@ -2496,3 +2496,5 @@ def mark_all_notifications_read(request):
             "/"
         )
     )
+def django_test(request):
+    return HttpResponse("Django is working!")
