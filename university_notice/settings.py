@@ -141,6 +141,7 @@ DATABASES = {
         "OPTIONS": {
             "charset": "utf8mb4",
             "ssl": True,
+            "connect_timeout": 10,
         },
     }
 }
