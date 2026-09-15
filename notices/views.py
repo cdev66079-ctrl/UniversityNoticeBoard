@@ -2496,11 +2496,19 @@ def mark_all_notifications_read(request):
         )
     )
 def db_test(request):
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT 1")
-        result = cursor.fetchone()
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            result = cursor.fetchone()
 
-    return JsonResponse({
-        "database": "connected",
-        "result": result[0],
-    })
+        return JsonResponse({
+            "status": "success",
+            "database": "connected",
+            "result": result[0],
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            "status": "error",
+            "error": str(e),
+        }, status=500)
