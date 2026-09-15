@@ -24,6 +24,7 @@ from .services.ai_notice import generate_notice_from_file
 
 from django.contrib.auth.hashers import check_password, make_password
 import nepali_datetime
+from django.db import connection
 
 # =========================================================
 # COMMUNITY PAPER STYLES
@@ -2494,3 +2495,12 @@ def mark_all_notifications_read(request):
             "/"
         )
     )
+def db_test(request):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT 1")
+        result = cursor.fetchone()
+
+    return JsonResponse({
+        "database": "connected",
+        "result": result[0],
+    })
