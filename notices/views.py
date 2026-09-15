@@ -24,6 +24,7 @@ from .services.ai_notice import generate_notice_from_file
 
 from django.contrib.auth.hashers import check_password, make_password
 import nepali_datetime
+import socket
 from django.db import connection
 
 # =========================================================
@@ -2511,4 +2512,29 @@ def db_test(request):
         return JsonResponse({
             "status": "error",
             "error": str(e),
+        }, status=500)
+
+
+def network_test(request):
+    try:
+        ip = socket.gethostbyname(
+            "mysql-f54406e-cdev66079-bc78.k.aivencloud.com"
+        )
+
+        sock = socket.create_connection(
+            (ip, 17705),
+            timeout=10
+        )
+        sock.close()
+
+        return JsonResponse({
+            "status": "success",
+            "resolved_ip": ip,
+            "port_17705": "reachable",
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            "status": "error",
+            "error": repr(e),
         }, status=500)
